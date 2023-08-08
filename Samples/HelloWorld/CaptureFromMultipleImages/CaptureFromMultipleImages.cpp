@@ -48,7 +48,7 @@ class MyResultReceiver : public CCapturedResultReceiver
 public:
 	virtual void OnCapturedResultReceived(const CCapturedResult* pResult)
 	{
-		const CFileImageTag *tag = dynamic_cast<const CFileImageTag*>(pResult->GetSourceImageTag());
+		const CFileImageTag *tag = dynamic_cast<const CFileImageTag*>(pResult->GetOriginalImageTag());
 
 		cout << "File: " << tag->GetFilePath() << endl;
 		cout << "Page: " << tag->GetPageNumber() << endl;
@@ -59,7 +59,7 @@ public:
 		}
 		else
 		{
-			int lCount = pResult->GetCount();
+			int lCount = pResult->GetItemsCount();
 			cout << "Captured " << lCount << " items" << endl;
 			for (int i = 0; i < lCount; i++) {
 				const CCapturedResultItem* item = pResult->GetItem(i);

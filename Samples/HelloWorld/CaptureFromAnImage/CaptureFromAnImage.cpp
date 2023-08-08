@@ -53,7 +53,7 @@ int main()
 	/*
 	* There can be multiple types of result items per image.
 	*/
-	int count = result->GetCount();
+	int count = result->GetItemsCount();
 	cout << "Captured " << count << " items" << endl;
 	for (int i = 0; i < count; i++) {
 		const CCapturedResultItem* item = result->GetItem(i);
