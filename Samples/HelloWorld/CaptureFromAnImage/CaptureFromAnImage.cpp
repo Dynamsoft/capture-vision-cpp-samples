@@ -14,13 +14,13 @@ using namespace dynamsoft::utility;
 // The following code only applies to Windows.
 #if defined(_WIN64) || defined(_WIN32)
 #ifdef _WIN64
-#pragma comment(lib, "../../../Lib/Windows/x64/DynamsoftCaptureVisionRouterx64.lib")
-#pragma comment(lib, "../../../Lib/Windows/x64/DynamsoftUtilityx64.lib")
-#pragma comment(lib, "../../../Lib/Windows/x64/DynamsoftLicensex64.lib")
+#pragma comment(lib, "../../../Distributables/Lib/Windows/x64/DynamsoftCaptureVisionRouterx64.lib")
+#pragma comment(lib, "../../../Distributables/Lib/Windows/x64/DynamsoftUtilityx64.lib")
+#pragma comment(lib, "../../../Distributables/Lib/Windows/x64/DynamsoftLicensex64.lib")
 #else
-#pragma comment(lib, "../../../Lib/Windows/x86/DynamsoftCaptureVisionRouterx86.lib")
-#pragma comment(lib, "../../../Lib/Windows/x86/DynamsoftUtilityx86.lib")
-#pragma comment(lib, "../../../Lib/Windows/x86/DynamsoftLicensex86.lib")
+#pragma comment(lib, "../../../Distributables/Lib/Windows/x86/DynamsoftCaptureVisionRouterx86.lib")
+#pragma comment(lib, "../../../Distributables/Lib/Windows/x86/DynamsoftUtilityx86.lib")
+#pragma comment(lib, "../../../Distributables/Lib/Windows/x86/DynamsoftLicensex86.lib")
 #endif
 #endif
 

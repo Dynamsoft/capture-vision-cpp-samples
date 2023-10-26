@@ -15,8 +15,8 @@ This repository contains multiple samples that demonstrate how to use the [Dynam
 
 | Sample            | Description |
 |---------------|----------------------|
-|[HelloWorld/CaptureFromAnImage](Samples/HelloWorld/CaptureFromAnImage)          | This is a C++ sample that illustrates the simplest way to capture content from an image file with Dynamsoft  Capture Vision SDK.            |
-|[HelloWorld/CaptureFromMultipleImages](Samples/HelloWorld/CaptureFromMultipleImages)          | This is a C++ sample that illustrates the simplest way to capture content from images file in a directory with Dynamsoft  Capture Vision SDK.            |
+|[HelloWorld\CaptureFromAnImage](Samples\HelloWorld\CaptureFromAnImage)          | This is a C++ sample that illustrates the simplest way to capture content from an image file with Dynamsoft  Capture Vision SDK.            |
+|[HelloWorld\CaptureFromMultipleImages](Samples\HelloWorld\CaptureFromMultipleImages)          | This is a C++ sample that illustrates the simplest way to capture content from images file in a directory with Dynamsoft  Capture Vision SDK.            |
 
 ## License
 

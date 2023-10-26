@@ -99,8 +99,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)..\..\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-xcopy /y "$(SolutionDir)..\..\CharacterModel" "$(TargetDir)CharacterModel\"
+      <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
+xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -128,8 +128,8 @@ xcopy /y "$(SolutionDir)..\..\CharacterModel" "$(TargetDir)CharacterModel\"
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)..\..\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-xcopy /y "$(SolutionDir)..\..\CharacterModel" "$(TargetDir)CharacterModel\"
+      <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
+xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -153,8 +153,8 @@ xcopy /y "$(SolutionDir)..\..\CharacterModel" "$(TargetDir)CharacterModel\"
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)..\..\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-xcopy /y "$(SolutionDir)..\..\CharacterModel" "$(TargetDir)CharacterModel\"
+      <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
+xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -181,8 +181,8 @@ xcopy /y "$(SolutionDir)..\..\CharacterModel" "$(TargetDir)CharacterModel\"
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)..\..\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-xcopy /y "$(SolutionDir)..\..\CharacterModel" "$(TargetDir)CharacterModel\"
+      <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
+xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
