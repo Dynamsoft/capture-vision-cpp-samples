@@ -101,6 +101,7 @@
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
 xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
+xcopy /ys "$(SolutionDir)..\..\Distributables\*.json" "$(OutputPath)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -130,6 +131,7 @@ xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)Charac
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
 xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
+xcopy /ys "$(SolutionDir)..\..\Distributables\*.json" "$(OutputPath)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -155,6 +157,7 @@ xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)Charac
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
 xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
+xcopy /ys "$(SolutionDir)..\..\Distributables\*.json" "$(OutputPath)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -183,6 +186,7 @@ xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)Charac
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
 xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
+xcopy /ys "$(SolutionDir)..\..\Distributables\*.json" "$(OutputPath)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -100,7 +100,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"</Command>
+xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
+xcopy /ys "$(SolutionDir)..\..\Distributables\*.json" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -128,7 +129,8 @@ xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)Charac
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"</Command>
+xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
+xcopy /ys "$(SolutionDir)..\..\Distributables\*.json" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,7 +154,8 @@ xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)Charac
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"</Command>
+xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
+xcopy /ys "$(SolutionDir)..\..\Distributables\*.json" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -179,7 +182,8 @@ xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)Charac
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"</Command>
+xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel" "$(TargetDir)CharacterModel\"
+xcopy /ys "$(SolutionDir)..\..\Distributables\*.json" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
