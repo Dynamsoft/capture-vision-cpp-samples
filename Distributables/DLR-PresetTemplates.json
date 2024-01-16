@@ -78,26 +78,32 @@
     "TextLineSpecificationOptions": [
         {
             "Name": "tls-letter",
-            "CharacterModelName": "Letter"
+            "CharacterModelName": "Letter",
+            "OutputResults": 1
         },
         {
             "Name": "tls-number",
-            "CharacterModelName": "Number"
+            "CharacterModelName": "Number",
+            "OutputResults": 1
         },
         {
             "Name": "tls-number-letter",
-            "CharacterModelName": "NumberLetter"
+            "CharacterModelName": "NumberLetter",
+            "OutputResults": 1
         },
         {
             "Name": "tls-number-uppercase",
-            "CharacterModelName": "NumberUppercase"
+            "CharacterModelName": "NumberUppercase",
+            "OutputResults": 1
         },
         {
-            "Name": "tls-textlines"
+            "Name": "tls-textlines",
+            "OutputResults": 1
         },
         {
             "Name": "tls-uppercase",
-            "CharacterModelName": "Uppercase"
+            "CharacterModelName": "Uppercase",
+            "OutputResults": 1
         }
     ],
     "LabelRecognizerTaskSettingOptions": [
