@@ -1,0 +1,247 @@
+{
+  "BarcodeFormatSpecificationOptions": [
+    {
+      "BarcodeFormatIds": [
+        "BF_CODE_39_EXTENDED"
+      ],
+      "BarcodeTextRegExPattern": "(I{0,1})([0-9A-HJ-NPR-Z]{9}[1-9A-HJ-NPR-TV-Y][0-9A-HJ-NPR-Z]{2}[0-9]{5})",
+
+      "MirrorMode": "MM_NORMAL",
+      "Name": "FP_1_BF_CODE_39_EXTENDED"
+    },
+    {
+      "BarcodeFormatIds": [
+        "BF_DATAMATRIX"
+      ],
+      "BarcodeTextRegExPattern": "[0-9A-HJ-NPR-Z]{9}[1-9A-HJ-NPR-TV-Y][0-9A-HJ-NPR-Z]{2}[0-9]{5}",
+
+      "Name": "FP_1_BF_DATAMATRIX"
+
+    },
+    {
+      "BarcodeFormatIds": [
+        "BF_QR_CODE"
+      ],
+      "BarcodeTextRegExPattern": "[0-9A-HJ-NPR-Z]{9}[1-9A-HJ-NPR-TV-Y][0-9A-HJ-NPR-Z]{2}[0-9]{5}",
+      "Name": "FP_1_BF_QR_CODE"
+    }
+  ],
+  "BarcodeReaderTaskSettingOptions": [
+    {
+      "Name": "vin_barcode_task",
+      "DeblurModes": null,
+      "BarcodeColourModes": [
+        {
+          "LightReflection": 1,
+          "Mode": "BICM_DARK_ON_LIGHT"
+        }
+      ],
+      "BarcodeFormatIds": [
+        "BF_CODE_39_EXTENDED",
+        "BF_QR_CODE",
+        "BF_DATAMATRIX"
+      ],
+      "BarcodeFormatSpecificationNameArray": [
+        "FP_1_BF_CODE_39_EXTENDED",
+        "FP_1_BF_QR_CODE",
+        "FP_1_BF_DATAMATRIX"
+      ],
+      "DeformationResistingModes": [
+        {
+          "BinarizationMode": {
+            "BinarizationThreshold": -1,
+            "BlockSizeX": 0,
+            "BlockSizeY": 0,
+            "EnableFillBinaryVacancy": 0,
+            "GrayscaleEnhancementModesIndex": -1,
+            "Mode": "BM_LOCAL_BLOCK",
+            "MorphOperation": "Close",
+            "MorphOperationKernelSizeX": -1,
+            "MorphOperationKernelSizeY": -1,
+            "MorphShape": "Rectangle",
+            "ThresholdCompensation": 10
+          },
+          "GrayscaleEnhancementMode": {
+            "Mode": "GEM_GENERAL",
+            "Sensitivity": -1,
+            "SharpenBlockSizeX": -1,
+            "SharpenBlockSizeY": -1,
+            "SmoothBlockSizeX": -1,
+            "SmoothBlockSizeY": -1
+          },
+          "Level": 5,
+          "Mode": "DRM_SKIP"
+        }
+      ],
+      "ExpectedBarcodesCount": 1,
+      "SectionImageParameterArray": [
+        {
+          "ImageParameterName": "ip_localize_barcode",
+          "Section": "ST_REGION_PREDETECTION"
+        },
+        {
+          "ImageParameterName": "ip_localize_barcode",
+          "Section": "ST_BARCODE_LOCALIZATION"
+        },
+        {
+          "ImageParameterName": "ip_decode_barcode",
+          "Section": "ST_BARCODE_DECODING"
+        }
+      ]
+    }
+  ],
+  "LabelRecognizerTaskSettingOptions": [
+    {
+      "Name": "vin_text_task",
+      "TextLineSpecificationNameArray": [
+        "tls_vin_text"
+      ],
+      "SectionImageParameterArray": [
+        {
+          "Section": "ST_REGION_PREDETECTION",
+          "ImageParameterName": "ip_recognize_text"
+        },
+        {
+          "Section": "ST_TEXT_LINE_LOCALIZATION",
+          "ImageParameterName": "ip_recognize_text"
+        },
+        {
+          "Section": "ST_TEXT_LINE_RECOGNITION",
+          "ImageParameterName": "ip_recognize_text"
+        }
+      ]
+    }
+  ],
+  "TextLineSpecificationOptions": [
+    {
+      "Name": "tls_vin_text",
+      "CharacterModelName": "VIN",
+      "StringRegExPattern": "[0-9A-HJ-NPR-Z]{9}[1-9A-HJ-NPR-TV-Y][0-9A-HJ-NPR-Z]{2}[0-9]{5}",
+      "CharHeightRange": [ 5, 1000, 1 ],
+      "StringLengthRange": [ 17, 17 ],
+      "OutputResults": 1
+    }
+  ],
+  "CaptureVisionTemplates": [
+    {
+      "Name": "ReadVINBarcode",
+      "ImageROIProcessingNameArray": [
+        "roi_vin_barcode"
+      ],
+      "SemanticProcessingNameArray": [ "sp_vin" ],
+      "Timeout": 10000
+    },
+    {
+      "Name": "ReadVINText",
+      "ImageROIProcessingNameArray": [
+        "roi_vin_text"
+      ],
+      "SemanticProcessingNameArray": [ "sp_vin" ],
+      "Timeout": 10000
+    }
+  ],
+  "ImageParameterOptions": [
+    {
+      "Name": "ip_localize_barcode",
+      "BinarizationModes": [
+        {
+          "Mode": "BM_LOCAL_BLOCK",
+          "MorphOperation": "Erode"
+        }
+      ],
+      "GrayscaleEnhancementModes": [
+        {
+          "Mode": "GEM_GENERAL",
+          "Sensitivity": 5,
+          "SharpenBlockSizeX": 3,
+          "SharpenBlockSizeY": 3,
+          "SmoothBlockSizeX": 3,
+          "SmoothBlockSizeY": 3
+        }
+      ],
+      "GrayscaleTransformationModes": [
+        {
+          "Mode": "GTM_ORIGINAL"
+        },
+        {
+          "Mode": "GTM_INVERTED"
+        }
+      ]
+    },
+    {
+      "Name": "ip_decode_barcode",
+      "GrayscaleTransformationModes": [
+        {
+          "Mode": "GTM_ORIGINAL"
+        }
+      ],
+      "ScaleDownThreshold": 99999
+    },
+    {
+      "Name": "ip_recognize_text",
+      "TextDetectionMode": {
+        "Mode": "TTDM_LINE",
+        "Direction": "HORIZONTAL",
+        "CharHeightRange": [
+          5,
+          1000,
+          1
+        ],
+        "Sensitivity": 7
+      },
+      "GrayscaleTransformationModes": [
+        {
+          "Mode": "GTM_ORIGINAL"
+        },
+        {
+          "Mode": "GTM_INVERTED"
+        }
+      ],
+      "BinarizationModes": [
+        {
+          "EnableFillBinaryVacancy": 1,
+          "Mode": "BM_LOCAL_BLOCK"
+        }
+      ]
+    }
+  ],
+  "TargetROIDefOptions": [
+    {
+      "Name": "roi_vin_barcode",
+      "TaskSettingNameArray": [
+        "vin_barcode_task"
+      ]
+    },
+    {
+      "Name": "roi_vin_text",
+      "TaskSettingNameArray": [
+        "vin_text_task"
+      ]
+    }
+  ],
+  "CharacterModelOptions": [
+    {
+      "Name": "VIN"
+    }
+  ],
+  "SemanticProcessingOptions": [
+    {
+      "Name": "sp_vin",
+      "ReferenceObjectFilter": {
+        "ReferenceTargetROIDefNameArray": [
+          "roi_vin_barcode",
+          "roi_vin_text"
+        ]
+      },
+      "TaskSettingNameArray": [
+        "dcp_vin"
+      ]
+    }
+  ],
+  "CodeParserTaskSettingOptions": [
+    {
+      "Name": "dcp_vin",
+      "CodeSpecifications": [ "VIN" ]
+    }
+  ]
+}

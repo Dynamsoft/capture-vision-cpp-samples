@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.2017
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MRZScanner", "MRZScanner.vcxproj", "{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}.Debug|x64.ActiveCfg = Debug|x64
+		{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}.Debug|x64.Build.0 = Debug|x64
+		{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}.Debug|x86.ActiveCfg = Debug|x64
+		{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}.Debug|x86.Build.0 = Debug|x64
+		{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}.Release|x64.ActiveCfg = Debug|x64
+		{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}.Release|x64.Build.0 = Debug|x64
+		{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}.Release|x86.ActiveCfg = Debug|x64
+		{3B4CEDD2-FB47-4604-BD13-71C2D6361E76}.Release|x86.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8E39BE0-C839-4777-9E2E-1C562BC40AD7}
+	EndGlobalSection
+EndGlobal

@@ -35,64 +35,69 @@ int main()
 	// The string 'DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9' here is a free public trial license. Note that network connection is required for this license to work.
 	errorcode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
 
-	cout << "License initialization: " << errorcode << "," << error << endl;
-
-	// 2.Create an instance of CCaptureVisionRouter.
-	CCaptureVisionRouter *router = new CCaptureVisionRouter;
-
-	// 3.Perform capture jobs(decoding barcodes/recognizing text lines/normalizing images) on an image
-	string imageFile = "../../../Images/dcv-sample-image.png";
-	CCapturedResult* result = router->Capture(imageFile.c_str(), CPresetTemplate::PT_DEFAULT);
-
-	cout << "File: " << imageFile << endl;
-
-	// 4.Outputs the result.
-	if (result->GetErrorCode() != 0) {
-		cout << "Error: " << result->GetErrorCode() << "," << result->GetErrorString() << endl;
+	if (errorcode != ErrorCode::EC_OK && errorcode != ErrorCode::EC_LICENSE_CACHE_USED)
+	{
+		cout << "License initialization failed: ErrorCode: " << errorcode << ", ErrorString: " << error << endl;
 	}
+	else
+	{
 
-	/*
-	* There can be multiple types of result items per image.
-	*/
-	int count = result->GetItemsCount();
-	cout << "Captured " << count << " items" << endl;
-	for (int i = 0; i < count; i++) {
-		const CCapturedResultItem* item = result->GetItem(i);
+		// 2.Create an instance of CCaptureVisionRouter.
+		CCaptureVisionRouter* router = new CCaptureVisionRouter;
 
-		CapturedResultItemType type = item->GetType();
-		if (type == CapturedResultItemType::CRIT_BARCODE) {
-			const CBarcodeResultItem* barcode = dynamic_cast<const CBarcodeResultItem*>(item);
+		// 3.Perform capture jobs(decoding barcodes/recognizing text lines/normalizing images) on an image
+		string imageFile = "../../../Images/dcv-sample-image.png";
+		CCapturedResult* result = router->Capture(imageFile.c_str(), CPresetTemplate::PT_DEFAULT);
 
-			// Output the decoded barcode text.
-			cout << ">>Item " << i << ": " << "Barcode," << barcode->GetText() << endl;
+		cout << "File: " << imageFile << endl;
+
+		// 4.Outputs the result.
+		if (result->GetErrorCode() != 0) {
+			cout << "Error: " << result->GetErrorCode() << "," << result->GetErrorString() << endl;
 		}
-		else if (type == CapturedResultItemType::CRIT_TEXT_LINE) {
-			const CTextLineResultItem* textLine = dynamic_cast<const CTextLineResultItem*>(item);
 
-			// Output the recognized text line.
-			cout << ">>Item " << i << ": " << "TextLine," << textLine->GetText() << endl;
-		}
-		else if (type == CapturedResultItemType::CRIT_NORMALIZED_IMAGE) {
-			const CNormalizedImageResultItem* normalizedImage = dynamic_cast<const CNormalizedImageResultItem*>(item);
+		/*
+		* There can be multiple types of result items per image.
+		*/
+		int count = result->GetItemsCount();
+		cout << "Captured " << count << " items" << endl;
+		for (int i = 0; i < count; i++) {
+			const CCapturedResultItem* item = result->GetItem(i);
 
-			string outPath = "normalizedResult_";
-			outPath += to_string(i) + ".png";
+			CapturedResultItemType type = item->GetType();
+			if (type == CapturedResultItemType::CRIT_BARCODE) {
+				const CBarcodeResultItem* barcode = dynamic_cast<const CBarcodeResultItem*>(item);
 
-			CImageManager manager;
+				// Output the decoded barcode text.
+				cout << ">>Item " << i << ": " << "Barcode," << barcode->GetText() << endl;
+			}
+			else if (type == CapturedResultItemType::CRIT_TEXT_LINE) {
+				const CTextLineResultItem* textLine = dynamic_cast<const CTextLineResultItem*>(item);
 
-			// Save normalized iamge to file.
-			errorcode = manager.SaveToFile(normalizedImage->GetImageData(), outPath.c_str());
-			if (errorcode == 0) {
-				cout << ">>Item " << i << ": " << "NormalizedImage," << outPath << endl;
+				// Output the recognized text line.
+				cout << ">>Item " << i << ": " << "TextLine," << textLine->GetText() << endl;
+			}
+			else if (type == CapturedResultItemType::CRIT_NORMALIZED_IMAGE) {
+				const CNormalizedImageResultItem* normalizedImage = dynamic_cast<const CNormalizedImageResultItem*>(item);
+
+				string outPath = "normalizedResult_";
+				outPath += to_string(i) + ".png";
+
+				CImageManager manager;
+
+				// Save normalized iamge to file.
+				errorcode = manager.SaveToFile(normalizedImage->GetImageData(), outPath.c_str());
+				if (errorcode == 0) {
+					cout << ">>Item " << i << ": " << "NormalizedImage," << outPath << endl;
+				}
 			}
 		}
-	}
 
-	// 5. Release the allocated memory.
-	if (result)
-		result->Release();
-	delete router, router = NULL;
-	
-	
+		// 5. Release the allocated memory.
+		if (result)
+			result->Release();
+		delete router, router = NULL;
+
+	}
 	return 0;
 }

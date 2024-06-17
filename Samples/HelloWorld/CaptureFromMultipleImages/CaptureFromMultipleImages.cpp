@@ -110,37 +110,42 @@ int main()
 	// The string 'DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9' here is a free public trial license. Note that network connection is required for this license to work.
 	errorcode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
 
-	cout << "License initialization: " << errorcode << "," << error << endl;
+	if (errorcode != ErrorCode::EC_OK && errorcode != ErrorCode::EC_LICENSE_CACHE_USED)
+	{
+		cout << "License initialization failed: ErrorCode: " << errorcode << ", ErrorString: " << error << endl;
+	}
+	else
+	{
 
-	// 2.Create an instance of CCaptureVisionRouter.
-	CCaptureVisionRouter *router = new CCaptureVisionRouter;
+		// 2.Create an instance of CCaptureVisionRouter.
+		CCaptureVisionRouter* router = new CCaptureVisionRouter;
 
-	cout << endl << ">> Input your image directory full path:" << endl;
-	cin >> imgPath;
+		cout << endl << ">> Input your image directory full path:" << endl;
+		cin >> imgPath;
 
-	// 3.Set input image source
-	CDirectoryFetcher *dirFetcher = new CDirectoryFetcher;
-	// Replace it with your image directory
-	dirFetcher->SetDirectory(imgPath.c_str());
+		// 3.Set input image source
+		CDirectoryFetcher* dirFetcher = new CDirectoryFetcher;
+		// Replace it with your image directory
+		dirFetcher->SetDirectory(imgPath.c_str());
 
-	router->SetInput(dirFetcher);
+		router->SetInput(dirFetcher);
 
-	// 4. Add image source state listener
-	CImageSourceStateListener *listener = new MyImageSourceStateListener(router);
-	router->AddImageSourceStateListener(listener);
+		// 4. Add image source state listener
+		CImageSourceStateListener* listener = new MyImageSourceStateListener(router);
+		router->AddImageSourceStateListener(listener);
 
-	// 5. Add captured result receiver
-	CCapturedResultReceiver *recv = new MyResultReceiver;
-	router->AddResultReceiver(recv);
+		// 5. Add captured result receiver
+		CCapturedResultReceiver* recv = new MyResultReceiver;
+		router->AddResultReceiver(recv);
 
-	// 6. Start capturing
-	router->StartCapturing(CPresetTemplate::PT_DEFAULT, true);
+		// 6. Start capturing
+		router->StartCapturing(CPresetTemplate::PT_DEFAULT, true);
 
-	// 7. Release the allocated memory.
-	delete router, router = NULL;
-	delete dirFetcher, dirFetcher = NULL;
-	delete listener, listener = NULL;
-	delete recv, recv = NULL;
-	
+		// 7. Release the allocated memory.
+		delete router, router = NULL;
+		delete dirFetcher, dirFetcher = NULL;
+		delete listener, listener = NULL;
+		delete recv, recv = NULL;
+	}
 	return 0;
 }

@@ -1,0 +1,44 @@
+{
+  "CaptureVisionTemplates": [
+    {
+      "Name": "all-dl",
+      "ImageROIProcessingNameArray": [
+        "roi-dl"
+      ],
+      "SemanticProcessingNameArray": [ "sp-all-dl" ]
+    }
+  ],
+  "TargetROIDefOptions": [
+    {
+      "Name": "roi-dl",
+      "TaskSettingNameArray": [
+        "task-dl"
+      ]
+    }
+  ],
+  "BarcodeReaderTaskSettingOptions": [
+    {
+      "Name": "task-dl",
+      "BarcodeFormatIds" : ["BF_PDF417"]
+    }
+  ],
+  "SemanticProcessingOptions": [
+    {
+      "Name": "sp-all-dl",
+      "ReferenceObjectFilter": {
+        "ReferenceTargetROIDefNameArray": [
+          "roi-dl"
+        ]
+      },
+      "TaskSettingNameArray": [
+        "dcp-all-dl"
+      ]
+    }
+  ],
+  "CodeParserTaskSettingOptions": [
+    {
+      "Name": "dcp-all-dl",
+      "CodeSpecifications": [ "AAMVA_DL_ID", "AAMVA_DL_ID_WITH_MAG_STRIPE", "SOUTH_AFRICA_DL" ]
+    }
+  ]
+}
