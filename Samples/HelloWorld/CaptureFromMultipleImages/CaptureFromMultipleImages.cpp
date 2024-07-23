@@ -1,5 +1,5 @@
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
 #include "../../../Include/DynamsoftCaptureVisionRouter.h"
 #include "../../../Include/DynamsoftUtility.h"
 
@@ -30,10 +30,11 @@ using namespace dynamsoft::utility;
 class MyImageSourceStateListener : public CImageSourceStateListener
 {
 private:
-	CCaptureVisionRouter* m_router;
+	CCaptureVisionRouter *m_router;
 
 public:
-	MyImageSourceStateListener(CCaptureVisionRouter* router) {
+	MyImageSourceStateListener(CCaptureVisionRouter *router)
+	{
 		m_router = router;
 	}
 
@@ -47,9 +48,9 @@ public:
 class MyResultReceiver : public CCapturedResultReceiver
 {
 public:
-	virtual void OnCapturedResultReceived(CCapturedResult* pResult)
+	virtual void OnCapturedResultReceived(CCapturedResult *pResult)
 	{
-		const CFileImageTag *tag = dynamic_cast<const CFileImageTag*>(pResult->GetOriginalImageTag());
+		const CFileImageTag *tag = dynamic_cast<const CFileImageTag *>(pResult->GetOriginalImageTag());
 
 		cout << "File: " << tag->GetFilePath() << endl;
 		cout << "Page: " << tag->GetPageNumber() << endl;
@@ -62,24 +63,28 @@ public:
 		{
 			int lCount = pResult->GetItemsCount();
 			cout << "Captured " << lCount << " items" << endl;
-			for (int i = 0; i < lCount; i++) {
-				const CCapturedResultItem* item = pResult->GetItem(i);
+			for (int i = 0; i < lCount; i++)
+			{
+				const CCapturedResultItem *item = pResult->GetItem(i);
 
 				CapturedResultItemType type = item->GetType();
-				if (type == CapturedResultItemType::CRIT_BARCODE) {
-					const CBarcodeResultItem* barcode = dynamic_cast<const CBarcodeResultItem*>(item);
+				if (type == CapturedResultItemType::CRIT_BARCODE)
+				{
+					const CBarcodeResultItem *barcode = dynamic_cast<const CBarcodeResultItem *>(item);
 
 					// Output the decoded barcode text.
 					cout << ">>Item " << i << ": " << "Barcode," << barcode->GetText() << endl;
 				}
-				else if (type == CapturedResultItemType::CRIT_TEXT_LINE) {
-					const CTextLineResultItem* textLine = dynamic_cast<const CTextLineResultItem*>(item);
+				else if (type == CapturedResultItemType::CRIT_TEXT_LINE)
+				{
+					const CTextLineResultItem *textLine = dynamic_cast<const CTextLineResultItem *>(item);
 
 					// Output the recognized text line.
 					cout << ">>Item " << i << ": " << "TextLine," << textLine->GetText() << endl;
 				}
-				else if (type == CapturedResultItemType::CRIT_NORMALIZED_IMAGE) {
-					const CNormalizedImageResultItem* normalizedImage = dynamic_cast<const CNormalizedImageResultItem*>(item);
+				else if (type == CapturedResultItemType::CRIT_NORMALIZED_IMAGE)
+				{
+					const CNormalizedImageResultItem *normalizedImage = dynamic_cast<const CNormalizedImageResultItem *>(item);
 
 					string outPath = "normalizedResult_";
 					outPath += to_string(i) + ".png";
@@ -88,7 +93,8 @@ public:
 
 					// Save normalized iamge to file.
 					int errorcode = manager.SaveToFile(normalizedImage->GetImageData(), outPath.c_str());
-					if (errorcode == 0) {
+					if (errorcode == 0)
+					{
 						cout << ">>Item " << i << ": " << "NormalizedImage," << outPath << endl;
 					}
 				}
@@ -106,7 +112,7 @@ int main()
 	string imgPath;
 
 	// 1.Initialize license.
-	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=dcv&utm_source=samples
+	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=cvs&utm_source=samples&package=c_cpp
 	// The string 'DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9' here is a free public trial license. Note that network connection is required for this license to work.
 	errorcode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
 
@@ -118,24 +124,25 @@ int main()
 	{
 
 		// 2.Create an instance of CCaptureVisionRouter.
-		CCaptureVisionRouter* router = new CCaptureVisionRouter;
+		CCaptureVisionRouter *router = new CCaptureVisionRouter;
 
-		cout << endl << ">> Input your image directory full path:" << endl;
+		cout << endl
+			 << ">> Input your image directory full path:" << endl;
 		cin >> imgPath;
 
 		// 3.Set input image source
-		CDirectoryFetcher* dirFetcher = new CDirectoryFetcher;
+		CDirectoryFetcher *dirFetcher = new CDirectoryFetcher;
 		// Replace it with your image directory
 		dirFetcher->SetDirectory(imgPath.c_str());
 
 		router->SetInput(dirFetcher);
 
 		// 4. Add image source state listener
-		CImageSourceStateListener* listener = new MyImageSourceStateListener(router);
+		CImageSourceStateListener *listener = new MyImageSourceStateListener(router);
 		router->AddImageSourceStateListener(listener);
 
 		// 5. Add captured result receiver
-		CCapturedResultReceiver* recv = new MyResultReceiver;
+		CCapturedResultReceiver *recv = new MyResultReceiver;
 		router->AddResultReceiver(recv);
 
 		// 6. Start capturing

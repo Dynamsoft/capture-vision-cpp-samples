@@ -1,5 +1,5 @@
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
 
 #include "../../../Include/DynamsoftCaptureVisionRouter.h"
 #include "../../../Include/DynamsoftUtility.h"
@@ -31,7 +31,7 @@ int main()
 	char error[512];
 
 	// 1.Initialize license.
-	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=dcv&utm_source=samples
+	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=cvs&utm_source=samples&package=c_cpp
 	// The string 'DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9' here is a free public trial license. Note that network connection is required for this license to work.
 	errorcode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
 
@@ -43,42 +43,47 @@ int main()
 	{
 
 		// 2.Create an instance of CCaptureVisionRouter.
-		CCaptureVisionRouter* router = new CCaptureVisionRouter;
+		CCaptureVisionRouter *router = new CCaptureVisionRouter;
 
 		// 3.Perform capture jobs(decoding barcodes/recognizing text lines/normalizing images) on an image
 		string imageFile = "../../../Images/dcv-sample-image.png";
-		CCapturedResult* result = router->Capture(imageFile.c_str(), CPresetTemplate::PT_DEFAULT);
+		CCapturedResult *result = router->Capture(imageFile.c_str(), CPresetTemplate::PT_DEFAULT);
 
 		cout << "File: " << imageFile << endl;
 
 		// 4.Outputs the result.
-		if (result->GetErrorCode() != 0) {
+		if (result->GetErrorCode() != 0)
+		{
 			cout << "Error: " << result->GetErrorCode() << "," << result->GetErrorString() << endl;
 		}
 
 		/*
-		* There can be multiple types of result items per image.
-		*/
+		 * There can be multiple types of result items per image.
+		 */
 		int count = result->GetItemsCount();
 		cout << "Captured " << count << " items" << endl;
-		for (int i = 0; i < count; i++) {
-			const CCapturedResultItem* item = result->GetItem(i);
+		for (int i = 0; i < count; i++)
+		{
+			const CCapturedResultItem *item = result->GetItem(i);
 
 			CapturedResultItemType type = item->GetType();
-			if (type == CapturedResultItemType::CRIT_BARCODE) {
-				const CBarcodeResultItem* barcode = dynamic_cast<const CBarcodeResultItem*>(item);
+			if (type == CapturedResultItemType::CRIT_BARCODE)
+			{
+				const CBarcodeResultItem *barcode = dynamic_cast<const CBarcodeResultItem *>(item);
 
 				// Output the decoded barcode text.
 				cout << ">>Item " << i << ": " << "Barcode," << barcode->GetText() << endl;
 			}
-			else if (type == CapturedResultItemType::CRIT_TEXT_LINE) {
-				const CTextLineResultItem* textLine = dynamic_cast<const CTextLineResultItem*>(item);
+			else if (type == CapturedResultItemType::CRIT_TEXT_LINE)
+			{
+				const CTextLineResultItem *textLine = dynamic_cast<const CTextLineResultItem *>(item);
 
 				// Output the recognized text line.
 				cout << ">>Item " << i << ": " << "TextLine," << textLine->GetText() << endl;
 			}
-			else if (type == CapturedResultItemType::CRIT_NORMALIZED_IMAGE) {
-				const CNormalizedImageResultItem* normalizedImage = dynamic_cast<const CNormalizedImageResultItem*>(item);
+			else if (type == CapturedResultItemType::CRIT_NORMALIZED_IMAGE)
+			{
+				const CNormalizedImageResultItem *normalizedImage = dynamic_cast<const CNormalizedImageResultItem *>(item);
 
 				string outPath = "normalizedResult_";
 				outPath += to_string(i) + ".png";
@@ -87,7 +92,8 @@ int main()
 
 				// Save normalized iamge to file.
 				errorcode = manager.SaveToFile(normalizedImage->GetImageData(), outPath.c_str());
-				if (errorcode == 0) {
+				if (errorcode == 0)
+				{
 					cout << ">>Item " << i << ": " << "NormalizedImage," << outPath << endl;
 				}
 			}
@@ -97,7 +103,6 @@ int main()
 		if (result)
 			result->Release();
 		delete router, router = NULL;
-
 	}
 	return 0;
 }

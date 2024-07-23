@@ -1,6 +1,6 @@
-#include<iostream>
-#include<string>
-#include<climits>
+#include <iostream>
+#include <string>
+#include <climits>
 #include "../../../Include/DynamsoftCaptureVisionRouter.h"
 #include "../../../Include/DynamsoftUtility.h"
 using namespace std;
@@ -29,65 +29,79 @@ using namespace dynamsoft::utility;
 class DriverLicenseResult
 {
 public:
-	string  codeType;
-	string  versionNumber;
-	string  licenseNumber;
-	string  vehicleClass;
-	string	fullName;
-	string  lastName;
-	string  givenName;
-	string	gender;
-	string	birthDate;
-	string	issuedDate;
-	string	expirationDate;
+	string codeType;
+	string versionNumber;
+	string licenseNumber;
+	string vehicleClass;
+	string fullName;
+	string lastName;
+	string givenName;
+	string gender;
+	string birthDate;
+	string issuedDate;
+	string expirationDate;
 
-	DriverLicenseResult FromParsedResultItem(const CParsedResultItem* item) {
+	DriverLicenseResult FromParsedResultItem(const CParsedResultItem *item)
+	{
 		codeType = item->GetCodeType();
 
 		if (codeType != "AAMVA_DL_ID" && codeType != "AAMVA_DL_ID_WITH_MAG_STRIPE" && codeType != "SOUTH_AFRICA_DL")
 			return *this;
-		
-		if (item->GetFieldValidationStatus("licenseNumber") != VS_FAILED && item->GetFieldValue("licenseNumber") != NULL) {
+
+		if (item->GetFieldValidationStatus("licenseNumber") != VS_FAILED && item->GetFieldValue("licenseNumber") != NULL)
+		{
 			licenseNumber = item->GetFieldValue("licenseNumber");
 		}
-		if (item->GetFieldValidationStatus("AAMVAVersionNumber") != VS_FAILED && item->GetFieldValue("AAMVAVersionNumber") != NULL) {
+		if (item->GetFieldValidationStatus("AAMVAVersionNumber") != VS_FAILED && item->GetFieldValue("AAMVAVersionNumber") != NULL)
+		{
 			versionNumber = item->GetFieldValue("AAMVAVersionNumber");
 		}
-		if (item->GetFieldValidationStatus("vehicleClass") != VS_FAILED && item->GetFieldValue("vehicleClass") != NULL) {
+		if (item->GetFieldValidationStatus("vehicleClass") != VS_FAILED && item->GetFieldValue("vehicleClass") != NULL)
+		{
 			vehicleClass = item->GetFieldValue("vehicleClass");
 		}
-		if (item->GetFieldValidationStatus("lastName") != VS_FAILED && item->GetFieldValue("lastName") != NULL) {
+		if (item->GetFieldValidationStatus("lastName") != VS_FAILED && item->GetFieldValue("lastName") != NULL)
+		{
 			lastName = item->GetFieldValue("lastName");
 		}
-		if (item->GetFieldValidationStatus("surName") != VS_FAILED && item->GetFieldValue("surName") != NULL) {
+		if (item->GetFieldValidationStatus("surName") != VS_FAILED && item->GetFieldValue("surName") != NULL)
+		{
 			lastName = item->GetFieldValue("surName");
 		}
-		if (item->GetFieldValidationStatus("givenName") != VS_FAILED && item->GetFieldValue("givenName") != NULL) {
+		if (item->GetFieldValidationStatus("givenName") != VS_FAILED && item->GetFieldValue("givenName") != NULL)
+		{
 			givenName = item->GetFieldValue("givenName");
 		}
-		if (item->GetFieldValidationStatus("fullName") != VS_FAILED && item->GetFieldValue("fullName") != NULL) {
+		if (item->GetFieldValidationStatus("fullName") != VS_FAILED && item->GetFieldValue("fullName") != NULL)
+		{
 			fullName = item->GetFieldValue("fullName");
 		}
 
-		if (item->GetFieldValidationStatus("sex") != VS_FAILED && item->GetFieldValue("sex") != NULL) {
+		if (item->GetFieldValidationStatus("sex") != VS_FAILED && item->GetFieldValue("sex") != NULL)
+		{
 			gender = item->GetFieldValue("sex");
 		}
 
-		if (item->GetFieldValidationStatus("gender") != VS_FAILED && item->GetFieldValue("gender") != NULL) {
+		if (item->GetFieldValidationStatus("gender") != VS_FAILED && item->GetFieldValue("gender") != NULL)
+		{
 			gender = item->GetFieldValue("gender");
 		}
 
-		if (item->GetFieldValidationStatus("birthDate") != VS_FAILED && item->GetFieldValue("birthDate") != NULL) {
+		if (item->GetFieldValidationStatus("birthDate") != VS_FAILED && item->GetFieldValue("birthDate") != NULL)
+		{
 			birthDate = item->GetFieldValue("birthDate");
 		}
-		if (item->GetFieldValidationStatus("issuedDate") != VS_FAILED && item->GetFieldValue("issuedDate") != NULL) {
+		if (item->GetFieldValidationStatus("issuedDate") != VS_FAILED && item->GetFieldValue("issuedDate") != NULL)
+		{
 			issuedDate = item->GetFieldValue("issuedDate");
 		}
-		if (item->GetFieldValidationStatus("expirationDate") != VS_FAILED && item->GetFieldValue("expirationDate") != NULL) {
+		if (item->GetFieldValidationStatus("expirationDate") != VS_FAILED && item->GetFieldValue("expirationDate") != NULL)
+		{
 			expirationDate = item->GetFieldValue("expirationDate");
 		}
 
-		if (fullName == "") {
+		if (fullName == "")
+		{
 			fullName = lastName + givenName;
 		}
 
@@ -115,10 +129,11 @@ public:
 class MyImageSourceStateListener : public CImageSourceStateListener
 {
 private:
-	CCaptureVisionRouter* m_router;
+	CCaptureVisionRouter *m_router;
 
 public:
-	MyImageSourceStateListener(CCaptureVisionRouter* router) {
+	MyImageSourceStateListener(CCaptureVisionRouter *router)
+	{
 		m_router = router;
 	}
 
@@ -132,10 +147,9 @@ public:
 class MyResultReceiver : public CCapturedResultReceiver
 {
 public:
-
-	virtual void OnParsedResultsReceived(CParsedResult* pResult)
+	virtual void OnParsedResultsReceived(CParsedResult *pResult)
 	{
-		const CFileImageTag *tag = dynamic_cast<const CFileImageTag*>(pResult->GetOriginalImageTag());
+		const CFileImageTag *tag = dynamic_cast<const CFileImageTag *>(pResult->GetOriginalImageTag());
 
 		cout << "File: " << tag->GetFilePath() << endl;
 		cout << "Page: " << tag->GetPageNumber() << endl;
@@ -148,8 +162,9 @@ public:
 		{
 			int lCount = pResult->GetItemsCount();
 			cout << "Parsed " << lCount << " driver licenses" << endl;
-			for (int i = 0; i < lCount; i++) {
-				const CParsedResultItem* item = pResult->GetItem(i);
+			for (int i = 0; i < lCount; i++)
+			{
+				const CParsedResultItem *item = pResult->GetItem(i);
 
 				DriverLicenseResult result;
 				result.FromParsedResultItem(item);
@@ -159,8 +174,6 @@ public:
 
 		cout << endl;
 	}
-
-
 };
 
 int main()
@@ -173,56 +186,72 @@ int main()
 	cout << "*****************************************" << endl;
 
 	// 1. Initialize license.
-	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=cvs&utm_source=samples
+	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=cvs&utm_source=samples&package=c_cpp
 	// The string "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9" here is a free public trial license. Note that network connection is required for this license to work.
 	errorcode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
 
 	if (errorcode != ErrorCode::EC_OK && errorcode != ErrorCode::EC_LICENSE_CACHE_USED)
 	{
 		cout << "License initialization failed: ErrorCode: " << errorcode << ", ErrorString: " << error << endl;
+		cout << "Press Enter to quit..." << endl;
+		cin.ignore();
+		return 0;
 	}
 	else
 	{
 		// 2. Create an instance of CCaptureVisionRouter.
-		CCaptureVisionRouter* router = new CCaptureVisionRouter;
+		CCaptureVisionRouter *router = new CCaptureVisionRouter;
 
-		// 3. Initialize the settings customized for driver license 
+		// 3. Initialize the settings customized for driver license
 		errorcode = router->InitSettingsFromFile("DriverLicense.json", error, 512);
 		if (errorcode != ErrorCode::EC_OK)
 		{
 			cout << "DriverLicense template initialization: " << error << endl;
+			delete router, router = NULL;
+			cout << "Press Enter to quit..." << endl;
+			cin.ignore();
+			return 0;
 		}
 		else
 		{
 			// 4. Set input image source
-			CDirectoryFetcher* dirFetcher = new CDirectoryFetcher;
+			CDirectoryFetcher *dirFetcher = new CDirectoryFetcher;
 			router->SetInput(dirFetcher);
 
 			// 5. Add image source state listener
-			CImageSourceStateListener* listener = new MyImageSourceStateListener(router);
+			CImageSourceStateListener *listener = new MyImageSourceStateListener(router);
 			router->AddImageSourceStateListener(listener);
 
 			// 6. Add captured result receiver
-			CCapturedResultReceiver* recv = new MyResultReceiver;
+			CCapturedResultReceiver *recv = new MyResultReceiver;
 			router->AddResultReceiver(recv);
 
 			string imgPath;
 
 			while (1)
 			{
-				cout << endl << ">> Input your image directory full path (or 'Q'/'q' to quit):" << endl;
+				cout << endl
+					 << ">> Input your image directory full path (or 'Q'/'q' to quit):" << endl;
 
 				getline(cin, imgPath);
 
 				if (imgPath == "q" || imgPath == "Q")
 				{
-					return 0;
+					break;
 				}
 
-				dirFetcher->SetDirectory(imgPath.c_str());
-
+				errorcode = dirFetcher->SetDirectory(imgPath.c_str());
+				if(errorcode != ErrorCode::EC_OK)
+				{
+					cout << "SetDirectory failed: ErrorCode: " << errorcode << ", ErrorString: " << DC_GetErrorString(errorcode) << endl;
+					continue;
+				}
 				// 7. Start capturing
 				errorcode = router->StartCapturing("", true, error, 512);
+				if(errorcode != ErrorCode::EC_OK)
+				{
+					cout << "StartCapturing failed: ErrorCode: " << errorcode << ", ErrorString: " << error << endl;
+				}
 			}
 
 			// 8. Release the allocated memory.
@@ -232,7 +261,6 @@ int main()
 			delete recv, recv = NULL;
 		}
 	}
-	cout << "Press Enter to quit..." << endl;
-	cin.ignore();
+
 	return 0;
 }

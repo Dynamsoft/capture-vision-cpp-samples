@@ -221,7 +221,10 @@
   ],
   "CharacterModelOptions": [
     {
-      "Name": "VIN"
+      "Name": "VIN",
+      "CharSet": {
+        "ExcludeChars": [ "O", "Q", "I" ]
+      }
     }
   ],
   "SemanticProcessingOptions": [

@@ -1,6 +1,6 @@
-#include<iostream>
-#include<string>
-#include<climits>
+#include <iostream>
+#include <string>
+#include <climits>
 
 #include "../../../Include/DynamsoftCaptureVisionRouter.h"
 #include "../../../Include/DynamsoftUtility.h"
@@ -40,35 +40,44 @@ public:
 
 	string vinString;
 
-	VINResult FromParsedResultItem(const CParsedResultItem* item) {
+	VINResult FromParsedResultItem(const CParsedResultItem *item)
+	{
 		codeType = item->GetCodeType();
 
 		if (codeType != "VIN")
 			return *this;
-		
-		if (item->GetFieldValue("vinString") != NULL) {
+
+		if (item->GetFieldValue("vinString") != NULL)
+		{
 			vinString = item->GetFieldValue("vinString");
-			if (item->GetFieldValidationStatus("vinString") == VS_FAILED) {
+			if (item->GetFieldValidationStatus("vinString") == VS_FAILED)
+			{
 				vinString += ", Validation Failed";
 			}
 		}
 
-		if (item->GetFieldValidationStatus("WMI") != VS_FAILED && item->GetFieldValue("WMI") != NULL) {
+		if (item->GetFieldValidationStatus("WMI") != VS_FAILED && item->GetFieldValue("WMI") != NULL)
+		{
 			WMI = item->GetFieldValue("WMI");
 		}
-		if (item->GetFieldValidationStatus("region") != VS_FAILED && item->GetFieldValue("region") != NULL) {
+		if (item->GetFieldValidationStatus("region") != VS_FAILED && item->GetFieldValue("region") != NULL)
+		{
 			region = item->GetFieldValue("region");
 		}
-		if (item->GetFieldValidationStatus("VDS") != VS_FAILED && item->GetFieldValue("VDS") != NULL) {
+		if (item->GetFieldValidationStatus("VDS") != VS_FAILED && item->GetFieldValue("VDS") != NULL)
+		{
 			VDS = item->GetFieldValue("VDS");
 		}
-		if (item->GetFieldValidationStatus("VIS") != VS_FAILED && item->GetFieldValue("VIS") != NULL) {
+		if (item->GetFieldValidationStatus("VIS") != VS_FAILED && item->GetFieldValue("VIS") != NULL)
+		{
 			VIS = item->GetFieldValue("VIS");
 		}
-		if (item->GetFieldValidationStatus("modelYear") != VS_FAILED && item->GetFieldValue("modelYear") != NULL) {
+		if (item->GetFieldValidationStatus("modelYear") != VS_FAILED && item->GetFieldValue("modelYear") != NULL)
+		{
 			modelYear = item->GetFieldValue("modelYear");
 		}
-		if (item->GetFieldValidationStatus("plantCode") != VS_FAILED && item->GetFieldValue("plantCode") != NULL) {
+		if (item->GetFieldValidationStatus("plantCode") != VS_FAILED && item->GetFieldValue("plantCode") != NULL)
+		{
 			plantCode = item->GetFieldValue("plantCode");
 		}
 
@@ -93,10 +102,11 @@ public:
 class MyImageSourceStateListener : public CImageSourceStateListener
 {
 private:
-	CCaptureVisionRouter* m_router;
+	CCaptureVisionRouter *m_router;
 
 public:
-	MyImageSourceStateListener(CCaptureVisionRouter* router) {
+	MyImageSourceStateListener(CCaptureVisionRouter *router)
+	{
 		m_router = router;
 	}
 
@@ -110,10 +120,9 @@ public:
 class MyResultReceiver : public CCapturedResultReceiver
 {
 public:
-
-	virtual void OnParsedResultsReceived(CParsedResult* pResult)
+	virtual void OnParsedResultsReceived(CParsedResult *pResult)
 	{
-		const CFileImageTag *tag = dynamic_cast<const CFileImageTag*>(pResult->GetOriginalImageTag());
+		const CFileImageTag *tag = dynamic_cast<const CFileImageTag *>(pResult->GetOriginalImageTag());
 
 		cout << "File: " << tag->GetFilePath() << endl;
 		cout << "Page: " << tag->GetPageNumber() << endl;
@@ -126,9 +135,10 @@ public:
 		{
 			int lCount = pResult->GetItemsCount();
 			cout << "Parsed " << lCount << " VIN codes" << endl;
-			for (int i = 0; i < lCount; i++) {
-				const CParsedResultItem* item = pResult->GetItem(i);
-				
+			for (int i = 0; i < lCount; i++)
+			{
+				const CParsedResultItem *item = pResult->GetItem(i);
+
 				VINResult result;
 				result.FromParsedResultItem(item);
 				cout << result.ToString() << endl;
@@ -149,39 +159,46 @@ int main()
 	cout << "*******************************" << endl;
 
 	// 1. Initialize license.
-	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=cvs&utm_source=samples
+	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=cvs&utm_source=samples&package=c_cpp
 	// The string "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9" here is a free public trial license. Note that network connection is required for this license to work.
 	errorcode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
 
 	if (errorcode != ErrorCode::EC_OK && errorcode != ErrorCode::EC_LICENSE_CACHE_USED)
 	{
 		cout << "License initialization failed: ErrorCode: " << errorcode << ", ErrorString: " << error << endl;
+		cout << "Press Enter to quit..." << endl;
+		cin.ignore();
+		return 0;
 	}
 	else
 	{
 
 		// 2. Create an instance of CCaptureVisionRouter.
-		CCaptureVisionRouter* router = new CCaptureVisionRouter;
+		CCaptureVisionRouter *router = new CCaptureVisionRouter;
 
-		// 3. Initialize the settings customized for VIN 
+		// 3. Initialize the settings customized for VIN
 		errorcode = router->InitSettingsFromFile("VIN.json", error, 512);
 		if (errorcode != ErrorCode::EC_OK)
 		{
 			cout << "VIN template initialization: " << error << endl;
+			delete router, router = NULL;
+			cout << "Press Enter to quit..." << endl;
+			cin.ignore();
+			return 0;
 		}
 		else
 		{
 
 			// 4. Set input image source
-			CDirectoryFetcher* dirFetcher = new CDirectoryFetcher;
+			CDirectoryFetcher *dirFetcher = new CDirectoryFetcher;
 			router->SetInput(dirFetcher);
 
 			// 5. Add image source state listener
-			CImageSourceStateListener* listener = new MyImageSourceStateListener(router);
+			CImageSourceStateListener *listener = new MyImageSourceStateListener(router);
 			router->AddImageSourceStateListener(listener);
 
 			// 6. Add captured result receiver
-			CCapturedResultReceiver* recv = new MyResultReceiver;
+			CCapturedResultReceiver *recv = new MyResultReceiver;
 			router->AddResultReceiver(recv);
 
 			string imgPath;
@@ -189,23 +206,30 @@ int main()
 
 			while (1)
 			{
-				cout << endl << ">> Step 1: Input your image directory full path (or 'Q'/'q' to quit):" << endl;
+				cout << endl
+					 << ">> Step 1: Input your image directory full path (or 'Q'/'q' to quit):" << endl;
 				getline(cin, imgPath);
 
 				if (imgPath == "q" || imgPath == "Q")
 				{
-					return 0;
+					break;
 				}
 
-				dirFetcher->SetDirectory(imgPath.c_str());
-
+				errorcode = dirFetcher->SetDirectory(imgPath.c_str());
+				if(errorcode != ErrorCode::EC_OK)
+				{
+					cout << "SetDirectory failed: ErrorCode: " << errorcode << ", ErrorString: " << DC_GetErrorString(errorcode) << endl;
+					continue;
+				}
 				int iNum = 0;
 				do
 				{
-					cout << endl << ">> Step 2: Choose a Mode Number:" << endl;
+					cout << endl
+						 << ">> Step 2: Choose a Mode Number:" << endl;
 					cout << "   1. Read VIN from Barcode" << endl;
 					cout << "   2. Read VIN from Text" << endl;
-					if (!(cin >> iNum)) {
+					if (!(cin >> iNum))
+					{
 						cin.clear();
 						cin.ignore(INT_MAX, '\n');
 					}
@@ -219,6 +243,10 @@ int main()
 
 				// 7. Start capturing
 				errorcode = router->StartCapturing(templateName.c_str(), true, error, 512);
+				if (errorcode != ErrorCode::EC_OK)
+				{
+					cout << "StartCapturing failed: ErrorCode: " << errorcode << ", ErrorString: " << error << endl;
+				}
 			}
 
 			// 8. Release the allocated memory.
@@ -226,10 +254,7 @@ int main()
 			delete dirFetcher, dirFetcher = NULL;
 			delete listener, listener = NULL;
 			delete recv, recv = NULL;
-
 		}
 	}
-	cout << "Press Enter to quit..." << endl;
-	cin.ignore();
 	return 0;
 }
