@@ -1,5 +1,5 @@
 #pragma once
-#define DYNAMSOFT_CORE_VERSION "3.4.20.2248"
+#define DYNAMSOFT_CORE_VERSION "3.4.30.2764"
 
 /**Enumeration section*/
 
@@ -201,7 +201,7 @@ typedef enum ErrorCode {
 	/**Failed to synchronize license info with license server. */
 	EC_LICENSE_SYNC_FAILED = -20003,
 
-	/**Device dose not match with buffer. */
+	/**Device does not match with buffer. */
 	EC_DEVICE_NOT_MATCH = -20004,
 
 	/**Failed to bind device. */
@@ -727,6 +727,9 @@ enum IntermediateResultUnitType : unsigned long long
 	/**The type of the IntermediateResult is "text line groups".*/
 	IRUT_RAW_TEXT_LINES = 1LL << 28,
 
+	/**The type of the IntermediateResult is "logic line segment".*/
+	IRUT_LOGIC_LINES = 1LL << 29,
+
 	/**The type of the IntermediateResult is "all".*/
 	IRUT_ALL = 0xFFFFFFFFFFFFFFFF
 };
@@ -827,6 +830,22 @@ typedef enum TransformMatrixType
 	TMT_ORIGINAL_TO_ROTATED_IMAGE
 
 }TransformMatrixType;
+
+/**
+* @enum CrossVerificationStatus
+*/
+typedef enum CrossVerificationStatus
+{
+	/**The cross verification has not been performed yet.*/
+	CVS_NOT_VERIFIED,
+
+	/**The cross verification has been passed successfully.*/
+	CVS_PASSED,
+
+	/**The cross verification has failed.*/
+	CVS_FAILED
+
+}CrossVerificationStatus;
 
 /**Structures section*/
 #pragma pack(push)
@@ -1788,8 +1807,8 @@ namespace dynamsoft
 			void SetImageTag(const CImageTag* _tag);
 			
 		private:
-			//CImageData(const CImageData&);
-			//CImageData& operator=(const CImageData&);
+			CImageData(const CImageData&);
+			CImageData& operator=(const CImageData&);
 		};
 
 		/**
@@ -2720,6 +2739,21 @@ namespace dynamsoft
 			 * @param charContoursCount The count of the character contours
 			 */
 			CTextZone(const CQuadrilateral& loc, const int charContoursIndices[], int charContoursCount);
+
+			/**
+			 * Copy constructor for CTextZone.
+			 *
+			 * @param textzone The reference to another CTextZone object.
+			 */
+			CTextZone(const CTextZone& textzone);
+
+			/**
+			 * Copy assignment operator for CTextZone.
+			 *
+			 * @param textzone The reference to another CTextZone object.
+			 * @return A reference to the copied CTextZone object.
+			 */
+			CTextZone& operator=(const CTextZone& textzone);
 
 			/**
 			 * Gets the location of the text zone

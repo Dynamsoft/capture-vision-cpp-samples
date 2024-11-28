@@ -25,7 +25,7 @@
 #include "DynamsoftCodeParser.h"
 #include "DynamsoftLicense.h"
 
-#define DCV_VERSION                  "2.4.20.2248"
+#define DCV_VERSION                  "2.4.30.2764"
 
 /**Enumeration section*/
 
@@ -607,6 +607,15 @@ namespace dynamsoft
 			*/
 			virtual void OnRawTextLinesReceived(dlr::intermediate_results::CRawTextLinesUnit *pResult, const IntermediateResultExtraInfo* info);
 
+			/**
+			* Called when logic lines have been received.
+			*
+			* @param [in] pResult A pointer to the CLogicLinesUnit object that contains the result.
+			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
+			*
+			*/
+			virtual void OnLogicLinesReceived(ddn::intermediate_results::CLogicLinesUnit *pResult, const IntermediateResultExtraInfo* info);
+
 
 			virtual const char* GetEncryptedString();
 
@@ -870,6 +879,8 @@ namespace dynamsoft
 			*
 			*/
 			virtual void Init();
+
+			virtual const char* GetEncryptedString();
 
 		};
 
@@ -1308,6 +1319,12 @@ namespace dynamsoft
 			* @return Returns a pointer to the `CBufferedItemsManager` object.
 			*/
 			CBufferedItemsManager* GetBufferedItemsManager();
+
+			int GetParameterTemplateCount();
+			// @param [in] index The index of the parameter template array.
+			// @param [in,out] nameBuffer The buffer is allocated by caller and the recommended nameBufferLen is 256. The template name will be copied to the buffer.
+			// @param [in] nameBufferLen The length of allocated buffer.
+			int GetParameterTemplateName(const int index, char nameBuffer[], int nameBufferLen);
 
 		private:
 			CCaptureVisionRouter(const CCaptureVisionRouter& r);

@@ -13,7 +13,7 @@
 
 
 #include"DynamsoftCaptureVisionRouter.h"
-#define DISA_VERSION "1.4.20.2248"
+#define DISA_VERSION "1.4.30.2764"
 
 #ifdef __cplusplus
 
@@ -174,6 +174,8 @@ namespace dynamsoft {
 			virtual void ClearStatus();
 
 			virtual void Init();
+
+			virtual const char* GetEncryptedString();
 
 		};
 

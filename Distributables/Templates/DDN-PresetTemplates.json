@@ -99,35 +99,73 @@
     "ImageParameterOptions": [
         {
             "Name": "ip-detect-and-normalize",
+            "ColourConversionModes": [
+                {
+                    "Mode": "CICM_GENERAL"
+                },
+                {
+                    "Mode": "CICM_EDGE_ENHANCEMENT"
+                },
+                {
+                    "Mode": "CICM_HSV",
+                    "ReferChannel": "H_CHANNEL"
+                }
+            ],
             "BinarizationModes": [
                 {
                     "Mode": "BM_LOCAL_BLOCK",
-                    "BlockSizeX": 0,
-                    "BlockSizeY": 0,
-                    "EnableFillBinaryVacancy": 0
+                    "BlockSizeX": 25,
+                    "BlockSizeY": 25,
+                    "EnableFillBinaryVacancy": 0,
+                    "ThresholdCompensation": 5
                 }
             ],
             "TextDetectionMode": {
                 "Mode": "TTDM_WORD",
                 "Direction": "HORIZONTAL",
                 "Sensitivity": 7
-            }
+            },
+            "TextureDetectionModes": [
+                {
+                    "Mode": "TDM_GENERAL_WIDTH_CONCENTRATION",
+                    "Sensitivity": 8
+                }
+            ]
         },
         {
             "Name": "ip-detect",
+            "ColourConversionModes": [
+                {
+                    "Mode": "CICM_GENERAL"
+                },
+                {
+                    "Mode": "CICM_EDGE_ENHANCEMENT"
+                },
+                {
+                    "Mode": "CICM_HSV",
+                    "ReferChannel": "H_CHANNEL"
+                }
+            ],
             "BinarizationModes": [
                 {
                     "Mode": "BM_LOCAL_BLOCK",
-                    "BlockSizeX": 0,
-                    "BlockSizeY": 0,
-                    "EnableFillBinaryVacancy": 0
+                    "BlockSizeX": 25,
+                    "BlockSizeY": 25,
+                    "EnableFillBinaryVacancy": 0,
+                    "ThresholdCompensation": 5
                 }
             ],
             "TextDetectionMode": {
                 "Mode": "TTDM_WORD",
                 "Direction": "HORIZONTAL",
                 "Sensitivity": 7
-            }
+            },
+            "TextureDetectionModes": [
+                {
+                    "Mode": "TDM_GENERAL_WIDTH_CONCENTRATION",
+                    "Sensitivity": 8
+                }
+            ]
         },
         {
             "Name": "ip-normalize",

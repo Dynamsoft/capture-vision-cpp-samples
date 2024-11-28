@@ -15,7 +15,7 @@
 #endif
 #include "DynamsoftCore.h"
 
-#define DCP_VERSION "2.4.20.2248"
+#define DCP_VERSION "2.4.30.2755"
 /**
  * @enum MappingStatus 
  *
@@ -121,6 +121,16 @@ namespace dynamsoft
 			 * 
 			 */
 			virtual ValidationStatus GetFieldValidationStatus(const char* fieldName) const = 0;
+
+			/**
+			* Gets the raw string of a specified field from the parsed result.
+			*
+			* @param [in] fieldName The name of the field.
+			*
+			* @return Returns a string representing the specified field raw string.
+			*
+			*/
+			virtual const char* GetFieldRawValue(const char* fieldName) const = 0;
 		};
 
 		/**

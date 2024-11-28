@@ -19,7 +19,7 @@
 #endif
 #include "DynamsoftCore.h"
 
-#define DDN_VERSION                  "2.4.20.2248"
+#define DDN_VERSION                  "2.6.10.2807"
 
 /**Enums section*/
 
@@ -76,7 +76,7 @@ typedef struct SimplifiedDocumentNormalizerSettings
 	*/
 	int scaleDownThreshold;
 
-	/** The minimum ratio between the target quadrilateral area and the total image area. Only those exceeding this value (measured in percentages) will be outputted.*/
+	/** The minimum ratio between the target quadrilateral area and the total image area. Only those exceeding this value (measured in percentages) will be output.*/
 	int minQuadrilateralAreaRatio;
 
 	/**Set the number of documents expected to be detected.*/
@@ -215,6 +215,85 @@ namespace dynamsoft
 				 * @return Returns 0 if successful, otherwise returns a negative value.
 				 */
 				virtual int SetLongLine(int index, const CLineSegment& line, const double matrixToOriginalImage[9] = IDENTITY_MATRIX) = 0;
+			};
+
+			/**
+			 * The `CLogicLinesUnit` class represents an intermediate result unit containing logic lines.
+			 */
+			class DDN_API CLogicLinesUnit : public CIntermediateResultUnit
+			{
+			protected:
+				/**
+				 * Destructor
+				 */
+				virtual ~CLogicLinesUnit() {};
+
+			public:
+				/**
+				 * Gets the number of logic lines in the unit.
+				 *
+				 * @return Returns the number of logic lines in the unit.
+				 */
+				virtual int GetCount() const = 0;
+
+				/**
+				 * Gets a logic line at the specified index.
+				 *
+				 * @param [in] index The index of the logic line.
+				 *
+				 * @return Returns a pointer to the CLineSegment object at the specified index.
+				 *
+				 */
+				virtual const CLineSegment* GetLogicLine(int index) const = 0;
+
+				/**
+				 * Gets a logic line at the specified index.
+				 *
+				 * @param [in] index The index of the logic line.
+				 *
+				 * @return Returns a pointer to the CLineSegment object at the specified index.
+				 *
+				 */
+				virtual const CLineSegment* operator[](int index) const = 0;
+
+				/**
+				 * Removes all logic lines.
+				 *
+				 */
+				virtual void RemoveAllLogicLines() = 0;
+
+				/**
+				 * Removes the logic line at the specified index.
+				 *
+				 * @param [in] index The index of the logic line to remove.
+				 *
+				 * @return Returns 0 if successful, otherwise returns a negative value.
+				 *
+				 */
+				virtual int RemoveLogicLine(int index) = 0;
+
+				/**
+				 * Adds a logic line.
+				 *
+				 * @param [in] logicline The logic line to add.
+				 * @param [in] matrixToOriginalImage The matrix to original image.
+				 *
+				 * @return Returns 0 if successful, otherwise returns a negative value.
+				 *
+				 */
+				virtual int AddLogicLine(const CLineSegment& logicline, const double matrixToOriginalImage[9] = IDENTITY_MATRIX) = 0;
+
+				/**
+				 * Sets the logic line at the specified index.
+				 *
+				 * @param [in] index The index of the logic line to set.
+				 * @param [in] logicline The logic line to set.
+				 * @param [in] matrixToOriginalImage The matrix to original image.
+				 *
+				 * @return Returns 0 if successful, otherwise returns a negative value.
+				 *
+				 */
+				virtual int SetLogicLine(int index, const CLineSegment& logicline, const double matrixToOriginalImage[9] = IDENTITY_MATRIX) = 0;
 			};
 
 			/**
@@ -508,6 +587,22 @@ namespace dynamsoft
 			 */
 			virtual int GetConfidenceAsDocumentBoundary() const = 0;
 
+			/**
+			 * Gets the status of current object as a verified document boundary.
+			 *
+			 * @return Return the CrossVerificationStatus of the detected quad result.
+			 *
+			 */
+			virtual CrossVerificationStatus GetCrossVerificationStatus() const = 0;
+
+			/**
+			 * Sets the status of current object.
+			 *
+			 * @param status The CrossVerificationStatus to be set.
+			 *
+			 */
+			virtual void SetCrossVerificationStatus(CrossVerificationStatus status) = 0;
+
 		};
 
 		/**
@@ -542,6 +637,21 @@ namespace dynamsoft
 			 */
 			virtual CQuadrilateral GetLocation() const = 0;
 
+			/**
+			 * Gets the status of current object as a verified normalized image.
+			 *
+			 * @return Return the CrossVerificationStatus of the normalized image result.
+			 *
+			 */
+			virtual CrossVerificationStatus GetCrossVerificationStatus() const = 0;
+
+			/**
+			 * Sets the status of current object.
+			 *
+			 * @param status The CrossVerificationStatus to be set.
+			 *
+			 */
+			virtual void SetCrossVerificationStatus(CrossVerificationStatus status) = 0;
 		};
 
 		/**
