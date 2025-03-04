@@ -15,15 +15,15 @@ using namespace dynamsoft::utility;
 // The following code only applies to Windows.
 #if defined(_WIN64) || defined(_WIN32)
 #ifdef _WIN64
-#pragma comment(lib, "../../Distributables/Lib/Windows/x64/DynamsoftCaptureVisionRouterx64.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x64/DynamsoftCorex64.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x64/DynamsoftUtilityx64.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x64/DynamsoftLicensex64.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftCaptureVisionRouterx64.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftCorex64.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftUtilityx64.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftLicensex64.lib")
 #else
-#pragma comment(lib, "../../Distributables/Lib/Windows/x86/DynamsoftCaptureVisionRouterx86.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x86/DynamsoftCorex86.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x86/DynamsoftUtilityx86.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x86/DynamsoftLicensex86.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftCaptureVisionRouterx86.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftCorex86.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftUtilityx86.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftLicensex86.lib")
 #endif
 #endif
 
@@ -150,7 +150,7 @@ void PrintResult(CParsedResult *pResult)
 	cout << "File: " << tag->GetFilePath() << endl;
 	cout << "Page: " << tag->GetPageNumber() << endl;
 
-	if (pResult->GetErrorCode() != EC_OK)
+	if (pResult->GetErrorCode() != EC_OK && pResult->GetErrorCode() != EC_UNSUPPORTED_JSON_KEY_WARNING)
 	{
 		cout << "Error: " << pResult->GetErrorString() << endl;
 	}
@@ -173,7 +173,7 @@ void PrintResult(CParsedResult *pResult)
 
 int main()
 {
-	int errorcode = 0;
+	int errorCode = 0;
 	char error[512];
 
 	cout << "*******************************" << endl;
@@ -183,11 +183,11 @@ int main()
 	// 1. Initialize license.
 	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=dcv&utm_source=samples&package=c_cpp
 	// The string "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9" here is a free public trial license. Note that network connection is required for this license to work.
-	errorcode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
+	errorCode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
 
-	if (errorcode != ErrorCode::EC_OK && errorcode != ErrorCode::EC_LICENSE_CACHE_USED)
+	if (errorCode != ErrorCode::EC_OK && errorCode != ErrorCode::EC_LICENSE_CACHE_USED)
 	{
-		cout << "License initialization failed: ErrorCode: " << errorcode << ", ErrorString: " << error << endl;
+		cout << "License initialization failed: ErrorCode: " << errorCode << ", ErrorString: " << error << endl;
 		cout << "Press Enter to quit..." << endl;
 		cin.ignore();
 		return 0;
@@ -221,25 +221,26 @@ int main()
 
 			// 4. Capture.
 			CCapturedResult* result = router->Capture(imgPath.c_str(), "ReadPassportAndId");
-			if (result->GetErrorCode() != ErrorCode::EC_OK)
+			if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
 			{
-				cout << "Capture failed: ErrorCode: " << result->GetErrorCode() << ", ErrorString: " << result->GetErrorString() << endl;
+				cout << "Capture warning: Warning Code: " << result->GetErrorCode() << ", Warning String: " << result->GetErrorString() << endl;
+			}
+			else if (result->GetErrorCode() != ErrorCode::EC_OK)
+			{
+				cout << "Capture failed: Error Code: " << result->GetErrorCode() << ", Error String: " << result->GetErrorString() << endl;
+			}
+			CParsedResult* dcpResult = result->GetParsedResult();
+			if (dcpResult == NULL || dcpResult->GetItemsCount() == 0)
+			{
+				cout << "No parsed results." << endl;
 			}
 			else
 			{
-				CParsedResult* dcpResult = result->GetParsedResult();
-				if (dcpResult == NULL || dcpResult->GetItemsCount() == 0)
-				{
-					cout << "No parsed results." << endl;
-				}
-				else
-				{
-					PrintResult(dcpResult);
-				}
-				//5. Release the parsed result.
-				if (dcpResult)
-					dcpResult->Release();
+				PrintResult(dcpResult);
 			}
+			//5. Release the parsed result.
+			if (dcpResult)
+				dcpResult->Release();
 			//6. Release the capture result.
 			if (result)
 				result->Release();

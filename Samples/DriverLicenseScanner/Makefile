@@ -1,9 +1,9 @@
 CC=gcc
 CCFLAGS=-c -std=c++11
 
-DCPRES_PATH=../../Distributables/ParserResources		
-DS_LIB_PATH=../../Distributables/Lib/Linux/x64
-DS_JSON_PATH=../../Distributables/Templates
+DCPRES_PATH=../../Dist/ParserResources		
+DS_LIB_PATH=../../Dist/Lib/Linux/x64
+DS_JSON_PATH=../../Dist/Templates
 LDFLAGS=-L $(DS_LIB_PATH) -Wl,-rpath=$(DS_LIB_PATH) -Wl,-rpath=./
 DS_LIB=-lDynamsoftCaptureVisionRouter -lDynamsoftCore -lDynamsoftUtility -lDynamsoftLicense
 

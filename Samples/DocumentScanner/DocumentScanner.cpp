@@ -13,28 +13,28 @@ using namespace dynamsoft::utility;
 // The following code only applies to Windows.
 #if defined(_WIN64) || defined(_WIN32)
 #ifdef _WIN64
-#pragma comment(lib, "../../Distributables/Lib/Windows/x64/DynamsoftCaptureVisionRouterx64.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x64/DynamsoftLicensex64.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x64/DynamsoftUtilityx64.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftCaptureVisionRouterx64.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftLicensex64.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftUtilityx64.lib")
 #else
-#pragma comment(lib, "../../Distributables/Lib/Windows/x86/DynamsoftCaptureVisionRouterx86.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x86/DynamsoftLicensex86.lib")
-#pragma comment(lib, "../../Distributables/Lib/Windows/x86/DynamsoftUtilityx86.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftCaptureVisionRouterx86.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftLicensex86.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftUtilityx86.lib")
 #endif
 #endif
 
 int main()
 {
-	int errorcode = 0;
+	int errorCode = 0;
 	char error[512];
 
 	// 1.Initialize license.
 	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=ddn&utm_source=samples&package=c_cpp
 	// The string 'DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9' here is a free public trial license. Note that network connection is required for this license to work.
-	errorcode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
-	if (errorcode != ErrorCode::EC_OK && errorcode != ErrorCode::EC_LICENSE_CACHE_USED)
+	errorCode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
+	if (errorCode != ErrorCode::EC_OK && errorCode != ErrorCode::EC_LICENSE_CACHE_USED)
 	{
-		cout << "License initialization failed: ErrorCode: " << errorcode << ", ErrorString: " << error << endl;
+		cout << "License initialization failed: ErrorCode: " << errorCode << ", ErrorString: " << error << endl;
 	}
 	else
 	{
@@ -66,40 +66,43 @@ int main()
 			CCapturedResult *result = router->Capture(imageFile.c_str(), CPresetTemplate::PT_DETECT_AND_NORMALIZE_DOCUMENT);
 
 			cout << "File: " << imageFile << endl;
-
-			if (result->GetErrorCode() != 0)
+			if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
+			{
+				cout << "Warning: " << result->GetErrorCode() << ", " << result->GetErrorString() << endl;
+			}
+			else if (result->GetErrorCode() != ErrorCode::EC_OK)
 			{
 				cout << "Error: " << result->GetErrorCode() << "," << result->GetErrorString() << endl;
 			}
 
-			CNormalizedImagesResult *normalizedResult = result->GetNormalizedImagesResult();
-			if (normalizedResult == nullptr || normalizedResult->GetItemsCount() == 0)
+			CProcessedDocumentResult *processedDocumentResult = result->GetProcessedDocumentResult();
+			if (processedDocumentResult == nullptr || processedDocumentResult->GetDeskewedImageResultItemsCount() == 0)
 			{
 				cout << "No document found." << endl;
 			}
 			else
 			{
-				int count = normalizedResult->GetItemsCount();
-				cout << "Normalized " << count << " documents" << endl;
+				int count = processedDocumentResult->GetDeskewedImageResultItemsCount();
+				cout << "Deskewed " << count << " documents" << endl;
 				for (int i = 0; i < count; i++)
 				{
-					const CNormalizedImageResultItem *normalizedImage = normalizedResult->GetItem(i);
-					string outPath = "normalizedResult_";
+					const CDeskewedImageResultItem *deskewedImage = processedDocumentResult->GetDeskewedImageResultItem(i);
+					string outPath = "deskewedResult_";
 					outPath += to_string(i) + ".png";
 
-					CImageManager manager;
+					CImageIO io;
 
 					// 5.Save normalized image to file.
-					errorcode = manager.SaveToFile(normalizedImage->GetImageData(), outPath.c_str());
-					if (errorcode == 0)
+					errorCode = io.SaveToFile(deskewedImage->GetImageData(), outPath.c_str());
+					if (errorCode == 0)
 					{
 						cout << "Document " << i << " file: " << outPath << endl;
 					}
 				}
 			}
 			// 6. Release the allocated memory.
-			if (normalizedResult)
-				normalizedResult->Release();
+			if (processedDocumentResult)
+				processedDocumentResult->Release();
 			if (result)
 				result->Release();
 		}

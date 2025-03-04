@@ -99,8 +99,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /ys "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(OutputPath)"
-xcopy /ys "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(OutputPath)Templates\"</Command>
+      <Command>xcopy /ys "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(OutputPath)"
+xcopy /ys "$(SolutionDir)..\..\Dist\Templates\*.json" "$(OutputPath)Templates\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,8 +127,8 @@ xcopy /ys "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(OutputPath)Te
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /ys "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(OutputPath)"
-xcopy /ys "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(OutputPath)Templates\"</Command>
+      <Command>xcopy /ys "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(OutputPath)"
+xcopy /ys "$(SolutionDir)..\..\Dist\Templates\*.json" "$(OutputPath)Templates\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -151,8 +151,8 @@ xcopy /ys "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(OutputPath)Te
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /ys "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(OutputPath)"
-xcopy /ys "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(OutputPath)Templates\"</Command>
+      <Command>xcopy /ys "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(OutputPath)"
+xcopy /ys "$(SolutionDir)..\..\Dist\Templates\*.json" "$(OutputPath)Templates\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -178,8 +178,8 @@ xcopy /ys "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(OutputPath)Te
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /ys "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(OutputPath)"
-xcopy /ys "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(OutputPath)Templates\"</Command>
+      <Command>xcopy /ys "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(OutputPath)"
+xcopy /ys "$(SolutionDir)..\..\Dist\Templates\*.json" "$(OutputPath)Templates\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

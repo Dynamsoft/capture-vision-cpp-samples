@@ -1,10 +1,10 @@
 CC=gcc
 CCFLAGS=-c -std=c++11
 
-DLRMODEL_PATH=../../Distributables/CharacterModel
-DCPRES_PATH=../../Distributables/ParserResources
-DS_JSON_PATH=../../Distributables/Templates		
-DS_LIB_PATH=../../Distributables/Lib/Linux/x64
+DLRMODEL_PATH=../../Dist/Models
+DCPRES_PATH=../../Dist/ParserResources
+DS_JSON_PATH=../../Dist/Templates		
+DS_LIB_PATH=../../Dist/Lib/Linux/x64
 LDFLAGS=-L $(DS_LIB_PATH) -Wl,-rpath=$(DS_LIB_PATH) -Wl,-rpath=./
 DS_LIB=-lDynamsoftCaptureVisionRouter -lDynamsoftCore -lDynamsoftUtility -lDynamsoftLicense
 
@@ -28,4 +28,4 @@ $(OBJECT): $(SOURCE)
 # the clean target
 .PHONY : clean
 clean: 
-	rm -f $(OBJECT) $(TARGET) -r $(DS_LIB_PATH)/CharacterModel $(DS_LIB_PATH)/ParserResources $(DS_LIB_PATH)/Templates
+	rm -f $(OBJECT) $(TARGET) -r $(DS_LIB_PATH)/Models $(DS_LIB_PATH)/ParserResources $(DS_LIB_PATH)/Templates

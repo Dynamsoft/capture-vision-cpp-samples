@@ -97,12 +97,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-if not exist "$(TargetDir)CharacterModel" mkdir "$(TargetDir)CharacterModel"
-xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel\VIN*" "$(TargetDir)CharacterModel"
+      <Command>xcopy /y "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
+if not exist "$(TargetDir)Models" mkdir "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\VIN*" "$(TargetDir)Models"
 if not exist "$(TargetDir)ParserResources" mkdir "$(TargetDir)ParserResources"
-xcopy /y "$(SolutionDir)..\..\Distributables\ParserResources\VIN*" "$(TargetDir)ParserResources"
-xcopy /y "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(TargetDir)\Templates\"</Command>
+xcopy /y "$(SolutionDir)..\..\Dist\ParserResources\VIN*" "$(TargetDir)ParserResources"
+xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -118,12 +118,12 @@ xcopy /y "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(TargetDir)\Tem
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-if not exist "$(TargetDir)CharacterModel" mkdir "$(TargetDir)CharacterModel"
-xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel\VIN*" "$(TargetDir)CharacterModel"
+      <Command>xcopy /y "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
+if not exist "$(TargetDir)Models" mkdir "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\VIN*" "$(TargetDir)Models"
 if not exist "$(TargetDir)ParserResources" mkdir "$(TargetDir)ParserResources"
-xcopy /y "$(SolutionDir)..\..\Distributables\ParserResources\VIN*" "$(TargetDir)ParserResources"
-xcopy /y "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(TargetDir)\Templates\"</Command>
+xcopy /y "$(SolutionDir)..\..\Dist\ParserResources\VIN*" "$(TargetDir)ParserResources"
+xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -143,12 +143,12 @@ xcopy /y "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(TargetDir)\Tem
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-if not exist "$(TargetDir)CharacterModel" mkdir "$(TargetDir)CharacterModel"
-xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel\VIN*" "$(TargetDir)CharacterModel"
+      <Command>xcopy /y "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
+if not exist "$(TargetDir)Models" mkdir "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\VIN*" "$(TargetDir)Models"
 if not exist "$(TargetDir)ParserResources" mkdir "$(TargetDir)ParserResources"
-xcopy /y "$(SolutionDir)..\..\Distributables\ParserResources\VIN*" "$(TargetDir)ParserResources"
-xcopy /y "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(TargetDir)\Templates\"</Command>
+xcopy /y "$(SolutionDir)..\..\Dist\ParserResources\VIN*" "$(TargetDir)ParserResources"
+xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -168,12 +168,12 @@ xcopy /y "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(TargetDir)\Tem
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)..\..\Distributables\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
-if not exist "$(TargetDir)CharacterModel" mkdir "$(TargetDir)CharacterModel"
-xcopy /y "$(SolutionDir)..\..\Distributables\CharacterModel\VIN*" "$(TargetDir)CharacterModel"
+      <Command>xcopy /y "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
+if not exist "$(TargetDir)Models" mkdir "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\VIN*" "$(TargetDir)Models"
 if not exist "$(TargetDir)ParserResources" mkdir "$(TargetDir)ParserResources"
-xcopy /y "$(SolutionDir)..\..\Distributables\ParserResources\VIN*" "$(TargetDir)ParserResources"
-xcopy /y "$(SolutionDir)..\..\Distributables\Templates\*.json" "$(TargetDir)\Templates\"</Command>
+xcopy /y "$(SolutionDir)..\..\Dist\ParserResources\VIN*" "$(TargetDir)ParserResources"
+xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

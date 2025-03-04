@@ -5,10 +5,10 @@ This repository contains multiple samples that demonstrate how to use the [Dynam
 ## Requirements
 
 - Windows
-  - Windows 7 and higher, or Windows Server 2003 and higher.
+  - Windows 8 and higher, or Windows Server 2012 and higher.
   - Visual Studio 2012 or above
 - Linux
-  - Linux x64: Ubuntu 14.04.4+ LTS, Debian 8+, CentOS 6+.
+  - Linux x64: Ubuntu 14.04.4+ LTS, Debian 8+, CentOS 7+.
   - Linux ARM 64-bit
   - GCC 5.4+
 
