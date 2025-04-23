@@ -39,7 +39,7 @@ int main()
 	else
 	{
 		// 2.Create an instance of CCaptureVisionRouter.
-		CCaptureVisionRouter *router = new CCaptureVisionRouter;
+		CCaptureVisionRouter *cvRouter = new CCaptureVisionRouter;
 
 		// 3. Set input image source.
 		string imageFile;
@@ -63,7 +63,7 @@ int main()
 				imageFile = imageFile.substr(1, imageFile.length() - 2);
 
 			// 4. Capture.
-			CCapturedResult *result = router->Capture(imageFile.c_str(), CPresetTemplate::PT_DETECT_AND_NORMALIZE_DOCUMENT);
+			CCapturedResult *result = cvRouter->Capture(imageFile.c_str(), CPresetTemplate::PT_DETECT_AND_NORMALIZE_DOCUMENT);
 
 			cout << "File: " << imageFile << endl;
 			if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
@@ -107,7 +107,7 @@ int main()
 				result->Release();
 		}
 
-		delete router, router = NULL;
+		delete cvRouter, cvRouter = NULL;
 	}
 
 	return 0;

@@ -152,7 +152,7 @@ int main()
 	{
 
 		// 2. Create an instance of CCaptureVisionRouter.
-		CCaptureVisionRouter *router = new CCaptureVisionRouter;
+		CCaptureVisionRouter *cvRouter = new CCaptureVisionRouter;
 
 		// 3. Set input image source
 		string imgPath;
@@ -192,7 +192,7 @@ int main()
 			cin.ignore(INT_MAX, '\n');
 
 			// 4. Capture.
-			CCapturedResult* result = router->Capture(imgPath.c_str(), templateName.c_str());
+			CCapturedResult* result = cvRouter->Capture(imgPath.c_str(), templateName.c_str());
 			if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
 			{
 				cout << "Capture warning: Warning Code: " << result->GetErrorCode() << ", Warning String: " << result->GetErrorString() << endl;
@@ -219,7 +219,7 @@ int main()
 		}
 
 		// 7. Release the allocated memory.
-		delete router, router = NULL;
+		delete cvRouter, cvRouter = NULL;
 	}
 	return 0;
 }

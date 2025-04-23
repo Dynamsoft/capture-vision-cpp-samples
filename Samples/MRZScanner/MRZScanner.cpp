@@ -195,7 +195,7 @@ int main()
 	else
 	{
 		// 2. Create an instance of CCaptureVisionRouter.
-		CCaptureVisionRouter *router = new CCaptureVisionRouter;
+		CCaptureVisionRouter *cvRouter = new CCaptureVisionRouter;
 
 		// 3. Set input image source
 		string imgPath;
@@ -215,12 +215,12 @@ int main()
 
 			if(imgPath.empty())
 				imgPath = "../../Images/passport-sample.jpg";
-				
+
 			if (imgPath.length() >= 2 && imgPath.front() == '"' && imgPath.back() == '"')
 				imgPath = imgPath.substr(1, imgPath.length() - 2);
 
 			// 4. Capture.
-			CCapturedResult* result = router->Capture(imgPath.c_str(), "ReadPassportAndId");
+			CCapturedResult* result = cvRouter->Capture(imgPath.c_str(), "ReadPassportAndId");
 			if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
 			{
 				cout << "Capture warning: Warning Code: " << result->GetErrorCode() << ", Warning String: " << result->GetErrorString() << endl;
@@ -245,6 +245,9 @@ int main()
 			if (result)
 				result->Release();
 		}
+
+		// 7. Release the allocated memory.
+		delete cvRouter, cvRouter = NULL;
 	}
 	return 0;
 }
