@@ -169,7 +169,7 @@ int main()
 	// The string "DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9" here is a free public trial license. Note that network connection is required for this license to work.
 	errorCode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
 
-	if (errorCode != ErrorCode::EC_OK && errorCode != ErrorCode::EC_LICENSE_CACHE_USED)
+	if (errorCode != ErrorCode::EC_OK && errorCode != ErrorCode::EC_LICENSE_WARNING)
 	{
 		cout << "License initialization failed: ErrorCode: " << errorCode << ", ErrorString: " << error << endl;
 		cout << "Press Enter to quit..." << endl;
@@ -203,30 +203,35 @@ int main()
 			if (imgPath.length() >= 2 && imgPath.front() == '"' && imgPath.back() == '"')
 				imgPath = imgPath.substr(1, imgPath.length() - 2);
 			// 4. Capture.
-			CCapturedResult* result = cvRouter->Capture(imgPath.c_str(),"ReadDriversLicense");
-			if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
+			CCapturedResultArray* resultArray = cvRouter->CaptureMultiPages(imgPath.c_str(),"ReadDriversLicense");
+			int count = resultArray->GetResultsCount();
+			for (int i = 0; i < count; ++i)
 			{
-				cout << "Capture warning: Warning Code: " << result->GetErrorCode() << ", Warning String: " << result->GetErrorString() << endl;
+				const CCapturedResult* result = resultArray->GetResult(i);
+				if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
+				{
+					cout << "Capture warning: Warning Code: " << result->GetErrorCode() << ", Warning String: " << result->GetErrorString() << endl;
+				}
+				else if (result->GetErrorCode() != ErrorCode::EC_OK)
+				{
+					cout << "Capture failed: ErrorCode: " << result->GetErrorCode() << ", ErrorString: " << result->GetErrorString() << endl;
+				}
+				CParsedResult* dcpResult = result->GetParsedResult();
+				if (dcpResult == NULL || dcpResult->GetItemsCount() == 0)
+				{
+					cout << "No parsed results in page " << i + 1 << "." << endl;
+				}
+				else
+				{
+					PrintResult(dcpResult);
+				}
+				//5. Release the parsed result.
+				if (dcpResult)
+					dcpResult->Release();
 			}
-			else if (result->GetErrorCode() != ErrorCode::EC_OK)
-			{
-				cout << "Capture failed: ErrorCode: " << result->GetErrorCode() << ", ErrorString: " << result->GetErrorString() << endl;
-			}
-			CParsedResult* dcpResult = result->GetParsedResult();
-			if (dcpResult == NULL || dcpResult->GetItemsCount() == 0)
-			{
-				cout<<"No parsed results."<<endl;
-			}
-			else
-			{
-				PrintResult(dcpResult);
-			}
-			//5. Release the parsed result.
-			if (dcpResult)
-				dcpResult->Release();
 			//6. Release the capture result.
-			if (result)
-				result->Release();
+			if (resultArray)
+				resultArray->Release();
 		}
 
 		// 7. Release the allocated memory.

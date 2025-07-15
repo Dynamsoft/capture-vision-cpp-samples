@@ -16,10 +16,12 @@ using namespace dynamsoft::utility;
 #pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftCaptureVisionRouterx64.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftLicensex64.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftUtilityx64.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftCorex64.lib")
 #else
 #pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftCaptureVisionRouterx86.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftLicensex86.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftUtilityx86.lib")
+#pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftCorex86.lib")
 #endif
 #endif
 
@@ -32,7 +34,7 @@ int main()
 	// You can request and extend a trial license from https://www.dynamsoft.com/customer/license/trialLicense?product=ddn&utm_source=samples&package=c_cpp
 	// The string 'DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9' here is a free public trial license. Note that network connection is required for this license to work.
 	errorCode = CLicenseManager::InitLicense("DLS2eyJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSJ9", error, 512);
-	if (errorCode != ErrorCode::EC_OK && errorCode != ErrorCode::EC_LICENSE_CACHE_USED)
+	if (errorCode != ErrorCode::EC_OK && errorCode != ErrorCode::EC_LICENSE_WARNING)
 	{
 		cout << "License initialization failed: ErrorCode: " << errorCode << ", ErrorString: " << error << endl;
 	}
@@ -63,48 +65,53 @@ int main()
 				imageFile = imageFile.substr(1, imageFile.length() - 2);
 
 			// 4. Capture.
-			CCapturedResult *result = cvRouter->Capture(imageFile.c_str(), CPresetTemplate::PT_DETECT_AND_NORMALIZE_DOCUMENT);
-
+			CCapturedResultArray* resultArray = cvRouter->CaptureMultiPages(imageFile.c_str(), CPresetTemplate::PT_DETECT_AND_NORMALIZE_DOCUMENT);
+			int count = resultArray->GetResultsCount();
 			cout << "File: " << imageFile << endl;
-			if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
+			for (int i = 0; i < count; ++i)
 			{
-				cout << "Warning: " << result->GetErrorCode() << ", " << result->GetErrorString() << endl;
-			}
-			else if (result->GetErrorCode() != ErrorCode::EC_OK)
-			{
-				cout << "Error: " << result->GetErrorCode() << "," << result->GetErrorString() << endl;
-			}
+				const CCapturedResult* result = resultArray->GetResult(i);
 
-			CProcessedDocumentResult *processedDocumentResult = result->GetProcessedDocumentResult();
-			if (processedDocumentResult == nullptr || processedDocumentResult->GetDeskewedImageResultItemsCount() == 0)
-			{
-				cout << "No document found." << endl;
-			}
-			else
-			{
-				int count = processedDocumentResult->GetDeskewedImageResultItemsCount();
-				cout << "Deskewed " << count << " documents" << endl;
-				for (int i = 0; i < count; i++)
+				if (result->GetErrorCode() == ErrorCode::EC_UNSUPPORTED_JSON_KEY_WARNING)
 				{
-					const CDeskewedImageResultItem *deskewedImage = processedDocumentResult->GetDeskewedImageResultItem(i);
-					string outPath = "deskewedResult_";
-					outPath += to_string(i) + ".png";
+					cout << "Warning: " << result->GetErrorCode() << ", " << result->GetErrorString() << endl;
+				}
+				else if (result->GetErrorCode() != ErrorCode::EC_OK)
+				{
+					cout << "Error: " << result->GetErrorCode() << "," << result->GetErrorString() << endl;
+				}
 
-					CImageIO io;
-
-					// 5.Save normalized image to file.
-					errorCode = io.SaveToFile(deskewedImage->GetImageData(), outPath.c_str());
-					if (errorCode == 0)
+				CProcessedDocumentResult* processedDocumentResult = result->GetProcessedDocumentResult();
+				if (processedDocumentResult == nullptr || processedDocumentResult->GetDeskewedImageResultItemsCount() == 0)
+				{
+					cout << "No document found in page " << i + 1 << endl;
+				}
+				else
+				{
+					int count = processedDocumentResult->GetDeskewedImageResultItemsCount();
+					cout << "Deskewed " << count << " documents" << endl;
+					for (int j = 0; j < count; j++)
 					{
-						cout << "Document " << i << " file: " << outPath << endl;
+						const CDeskewedImageResultItem* deskewedImage = processedDocumentResult->GetDeskewedImageResultItem(j);
+						string outPath = "deskewedResult_";
+						outPath += to_string(i + 1) + "-" + to_string(j + 1) + ".png";
+
+						CImageIO io;
+
+						// 5.Save normalized image to file.
+						errorCode = io.SaveToFile(deskewedImage->GetImageData(), outPath.c_str());
+						if (errorCode == 0)
+						{
+							cout << "Document " << i + 1 << "-" << j + 1 << " file: " << outPath << endl;
+						}
 					}
 				}
+				// 6. Release the allocated memory.
+				if (processedDocumentResult)
+					processedDocumentResult->Release();
 			}
-			// 6. Release the allocated memory.
-			if (processedDocumentResult)
-				processedDocumentResult->Release();
-			if (result)
-				result->Release();
+			if (resultArray)
+				resultArray->Release();
 		}
 
 		delete cvRouter, cvRouter = NULL;
