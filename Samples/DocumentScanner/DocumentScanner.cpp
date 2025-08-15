@@ -92,14 +92,14 @@ int main()
 					cout << "Deskewed " << count << " documents" << endl;
 					for (int j = 0; j < count; j++)
 					{
-						const CDeskewedImageResultItem* deskewedImage = processedDocumentResult->GetDeskewedImageResultItem(j);
-						string outPath = "deskewedResult_";
+						const CEnhancedImageResultItem* enhancedImage = processedDocumentResult->GetEnhancedImageResultItem(j);
+						string outPath = "enhancedResult_";
 						outPath += to_string(i + 1) + "-" + to_string(j + 1) + ".png";
 
 						CImageIO io;
 
 						// 5.Save normalized image to file.
-						errorCode = io.SaveToFile(deskewedImage->GetImageData(), outPath.c_str());
+						errorCode = io.SaveToFile(enhancedImage->GetImageData(), outPath.c_str());
 						if (errorCode == 0)
 						{
 							cout << "Document " << i + 1 << "-" << j + 1 << " file: " << outPath << endl;
