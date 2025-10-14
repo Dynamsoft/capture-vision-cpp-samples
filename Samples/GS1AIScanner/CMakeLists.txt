@@ -15,6 +15,7 @@ set(DS_LIBS DynamsoftCaptureVisionRouter DynamsoftCore DynamsoftUtility Dynamsof
 
 set(DCPRES_PATH ../../Dist/ParserResources)
 set(DS_JSON_PATH ../../Dist/Templates)
+set(DS_MODELS_PATH ../../Dist/Models)
 
 add_executable(${TARGET_NAME} ${SOURCE_FILE})
 
@@ -29,10 +30,12 @@ add_custom_command(
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${DCPRES_PATH} ${DS_LIB_PATH}/ParserResources
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${DS_JSON_PATH} ${DS_LIB_PATH}/Templates
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${DS_MODELS_PATH} ${DS_LIB_PATH}/Models
 )
 
 add_custom_target(my_clean
     COMMAND ${CMAKE_COMMAND} -E remove -f ${TARGET_NAME} GS1AIScanner.o
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${DS_LIB_PATH}/ParserResources
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${DS_LIB_PATH}/Templates
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${DS_LIB_PATH}/Models
 )

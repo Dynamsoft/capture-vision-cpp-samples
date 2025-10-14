@@ -100,6 +100,8 @@
       <Command>xcopy /y "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
 if not exist "$(TargetDir)Models" mkdir "$(TargetDir)Models"
 xcopy /y "$(SolutionDir)..\..\Dist\Models\VIN*" "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\EAN13Decoder.data" "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\Code128Decoder.data" "$(TargetDir)Models"
 if not exist "$(TargetDir)ParserResources" mkdir "$(TargetDir)ParserResources"
 xcopy /y "$(SolutionDir)..\..\Dist\ParserResources\VIN*" "$(TargetDir)ParserResources"
 xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</Command>
@@ -121,6 +123,8 @@ xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</
       <Command>xcopy /y "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
 if not exist "$(TargetDir)Models" mkdir "$(TargetDir)Models"
 xcopy /y "$(SolutionDir)..\..\Dist\Models\VIN*" "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\EAN13Decoder.data" "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\Code128Decoder.data" "$(TargetDir)Models"
 if not exist "$(TargetDir)ParserResources" mkdir "$(TargetDir)ParserResources"
 xcopy /y "$(SolutionDir)..\..\Dist\ParserResources\VIN*" "$(TargetDir)ParserResources"
 xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</Command>
@@ -146,6 +150,8 @@ xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</
       <Command>xcopy /y "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
 if not exist "$(TargetDir)Models" mkdir "$(TargetDir)Models"
 xcopy /y "$(SolutionDir)..\..\Dist\Models\VIN*" "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\EAN13Decoder.data" "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\Code128Decoder.data" "$(TargetDir)Models"
 if not exist "$(TargetDir)ParserResources" mkdir "$(TargetDir)ParserResources"
 xcopy /y "$(SolutionDir)..\..\Dist\ParserResources\VIN*" "$(TargetDir)ParserResources"
 xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</Command>
@@ -171,6 +177,8 @@ xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</
       <Command>xcopy /y "$(SolutionDir)..\..\Dist\Lib\Windows\$(PlatformTarget)\*.dll" "$(TargetDir)"
 if not exist "$(TargetDir)Models" mkdir "$(TargetDir)Models"
 xcopy /y "$(SolutionDir)..\..\Dist\Models\VIN*" "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\EAN13Decoder.data" "$(TargetDir)Models"
+xcopy /y "$(SolutionDir)..\..\Dist\Models\Code128Decoder.data" "$(TargetDir)Models"
 if not exist "$(TargetDir)ParserResources" mkdir "$(TargetDir)ParserResources"
 xcopy /y "$(SolutionDir)..\..\Dist\ParserResources\VIN*" "$(TargetDir)ParserResources"
 xcopy /y "$(SolutionDir)..\..\Dist\Templates\*.json" "$(TargetDir)\Templates\"</Command>

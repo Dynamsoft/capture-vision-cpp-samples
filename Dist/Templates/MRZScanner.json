@@ -302,7 +302,15 @@
           "ImageParameterName": "ip_mrz",
           "StageArray": [
             {
-              "Stage": "SST_LOCALIZE_TEXT_LINES"
+                "Stage": "SST_LOCALIZE_TEXT_LINES",
+                "LocalizationModes":[
+                    {
+                        "Mode": "LM_NEURAL_NETWORK"
+                    },
+                    {
+                        "Mode": "LM_GENERAL"
+                    }
+                ]
             }
           ]
         },
@@ -344,7 +352,15 @@
           "ImageParameterName": "ip_mrz",
           "StageArray": [
             {
-              "Stage": "SST_LOCALIZE_TEXT_LINES"
+                "Stage": "SST_LOCALIZE_TEXT_LINES",
+                "LocalizationModes":[
+                    {
+                        "Mode": "LM_NEURAL_NETWORK"
+                    },
+                    {
+                        "Mode": "LM_GENERAL"
+                    }
+                ]
             }
           ]
         },
@@ -387,7 +403,15 @@
           "ImageParameterName": "ip_mrz",
           "StageArray": [
             {
-              "Stage": "SST_LOCALIZE_TEXT_LINES"
+                "Stage": "SST_LOCALIZE_TEXT_LINES",
+                "LocalizationModes":[
+                    {
+                        "Mode": "LM_NEURAL_NETWORK"
+                    },
+                    {
+                        "Mode": "LM_GENERAL"
+                    }
+                ]
             }
           ]
         },
@@ -429,7 +453,15 @@
           "ImageParameterName": "ip_mrz",
           "StageArray": [
             {
-              "Stage": "SST_LOCALIZE_TEXT_LINES"
+                "Stage": "SST_LOCALIZE_TEXT_LINES",
+                "LocalizationModes":[
+                    {
+                        "Mode": "LM_NEURAL_NETWORK"
+                    },
+                    {
+                        "Mode": "LM_GENERAL"
+                    }
+                ]
             }
           ]
         },
@@ -474,7 +506,15 @@
           "ImageParameterName": "ip_mrz",
           "StageArray": [
             {
-              "Stage": "SST_LOCALIZE_TEXT_LINES"
+                "Stage": "SST_LOCALIZE_TEXT_LINES",
+                "LocalizationModes":[
+                    {
+                        "Mode": "LM_NEURAL_NETWORK"
+                    },
+                    {
+                        "Mode": "LM_GENERAL"
+                    }
+                ]
             }
           ]
         },
