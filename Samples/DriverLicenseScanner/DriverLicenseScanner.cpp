@@ -216,10 +216,21 @@ int main()
 				{
 					cout << "Capture failed: ErrorCode: " << result->GetErrorCode() << ", ErrorString: " << result->GetErrorString() << endl;
 				}
+
+				int pageNumber = i + 1;
+
+				// It is usually necessary to determine 'ImageTagType' based on the original image tag.
+				// Since imageFile is used, it is directly converted to 'const dynamsoft::basic_structures::CFileImageTag *'.
+				const CFileImageTag *tag = dynamic_cast<const CFileImageTag *>(result->GetOriginalImageTag());
+				if(tag != nullptr)
+				{
+					pageNumber = tag->GetPageNumber() + 1;
+				}
+
 				CParsedResult* dcpResult = result->GetParsedResult();
 				if (dcpResult == NULL || dcpResult->GetItemsCount() == 0)
 				{
-					cout << "No parsed results in page " << i + 1 << "." << endl;
+					cout << "No parsed results in page " << pageNumber << "." << endl;
 				}
 				else
 				{

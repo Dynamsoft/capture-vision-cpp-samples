@@ -81,10 +81,20 @@ int main()
 					cout << "Error: " << result->GetErrorCode() << "," << result->GetErrorString() << endl;
 				}
 
+				int pageNumber = i + 1;
+
+				// It is usually necessary to determine 'ImageTagType' based on the original image tag.
+				// Since imageFile is used, it is directly converted to 'const dynamsoft::basic_structures::CFileImageTag *'.
+				const CFileImageTag *tag = dynamic_cast<const CFileImageTag *>(result->GetOriginalImageTag());
+				if(tag != nullptr)
+				{
+					pageNumber = tag->GetPageNumber() + 1;
+				}
+
 				CProcessedDocumentResult* processedDocumentResult = result->GetProcessedDocumentResult();
 				if (processedDocumentResult == nullptr || processedDocumentResult->GetDeskewedImageResultItemsCount() == 0)
 				{
-					cout << "No document found in page " << i + 1 << endl;
+					cout << "No document found in page " << pageNumber << endl;
 				}
 				else
 				{
@@ -94,7 +104,7 @@ int main()
 					{
 						const CEnhancedImageResultItem* enhancedImage = processedDocumentResult->GetEnhancedImageResultItem(j);
 						string outPath = "enhancedResult_";
-						outPath += to_string(i + 1) + "-" + to_string(j + 1) + ".png";
+						outPath += to_string(pageNumber) + "-" + to_string(j + 1) + ".png";
 
 						CImageIO io;
 
@@ -102,7 +112,7 @@ int main()
 						errorCode = io.SaveToFile(enhancedImage->GetImageData(), outPath.c_str());
 						if (errorCode == 0)
 						{
-							cout << "Document " << i + 1 << "-" << j + 1 << " file: " << outPath << endl;
+							cout << "Document " << pageNumber << "-" << j + 1 << " file: " << outPath << endl;
 						}
 					}
 				}
