@@ -3,68 +3,75 @@ MapTableName: SexCode
 2,F female
 ,9,X unspecified
 MapTableName: StateOrProvinceCode
-AL Alabama
-AK Alaska
-AZ Arizona
-AR Arkansas
-CA California
-CO Colorado
-CT Connecticut
-DE Delaware
-DC District of Columbia
-FL Florida
-GA Georgia
-HI Hawaii
-ID Idaho
-IL Illinois
-IN Indiana
-IA Iowa
-KS Kansas
-KY Kentucky
-LA Louisiana
-ME Maine
-MD Maryland
-MA Massachusetts
-MI Michigan
-MN Minnesota
-MS Mississippi
-MO Missouri
-MT Montana
-NE Nebraska
-NV Nevada
-NH New Hampshire
-NJ New Jersey
-NM New Mexico
-NY New York
-NC North Carolina
-ND North Dakota
-OH Ohio
-OK Oklahoma
-OR Oregon
-PA Pennsylvania
-PR Puerto Rico
-RI Rhode Island
-SC South Carolina
-SD South Dakota
-TN Tennessee
-TX Texas
-UT Utah
-VT Vermont
-VA Virginia
-WA Washington
-WV West Virginia
-WI Wisconsin
-WY Wyoming
-AB Alberta
-BC British Columbia
-MB Manitoba
-NB New Brunswick
-NL Newfoundland and Labrador
-NS Nova Scotia
-ON Ontario
-PE Prince Edward Island
-QC Quebec
-SK Saskatchewan
-NT Northwest Territories
-YT Yukon
-NU Nunavut
+AK,636059 Alaska
+AL,636033 Alabama
+AR,636021 Arkansas
+AZ,636026 Arizona
+CA,636014 California
+CO,636020 Colorado
+CT,636006 Connecticut
+DC,636043 District of Columbia
+DE,636011 Delaware
+FL,636010 Florida
+GA,636055 Georgia
+HI,636047 Hawaii
+IA,636018 Iowa
+ID,636050 Idaho
+IL,636035 Illinois
+IN,636037 Indiana
+KS,636022 Kansas
+KY,636046 Kentucky
+LA,636007 Louisiana
+MA,636002 Massachusetts
+MD,636003 Maryland
+ME,636041 Maine
+MI,636032 Michigan
+MN,636038 Minnesota
+MO,636030 Missouri
+MS,636051 Mississippi
+MT,636008 Montana
+NC,636004 North Carolina
+ND,636034 North Dakota
+NE,636054 Nebraska
+NH,636039 New Hampshire
+NJ,636036 New Jersey
+NM,636009 New Mexico
+NV,636049 Nevada
+NY,636001 New York
+OH,636023 Ohio
+OK,636058 Oklahoma
+OR,636029 Oregon
+PA,636025 Pennsylvania
+RI,636052 Rhode Island
+SC,636005 South Carolina
+SD,636042 South Dakota
+TN,636053 Tennessee
+TX,636015 Texas
+UT,636040 Utah
+VA,636000 Virginia
+VT,636024 Vermont
+WA,636045 Washington
+WI,636031 Wisconsin
+WV,636061 West Virginia
+WY,636060 Wyoming
+AB,604432 Alberta
+BC,636028 British Columbia
+MB,636048 Manitoba
+NB,636017 New Brunswick
+NF,636016 Newfoundland and Labrador
+NT,604434 Northwest Territory
+NS,636013 Nova Scotia
+NU,604433 Nunavut
+ON,636012 Ontario
+PE,604426 Prince Edward Island
+QC,604428 Quebec
+SK,636044 Saskatchewan
+YT,604429 Yukon Territory
+AS,604427 American Samoa
+FM Federal States of Micronesia
+GM,636019 Guam
+MH Marshal Islands
+MP,604430 Norther Marianna Islands
+PR,604431 Puerto Rico
+VI,636062 Virgin Islands
+WK Wake Island
