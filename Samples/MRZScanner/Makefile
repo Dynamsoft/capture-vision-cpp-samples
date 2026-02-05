@@ -8,7 +8,7 @@ OVERLAPPING_CHARS_PATH=../../Dist/OverlappingChars.data
 DS_JSON_PATH=../../Dist/Templates
 DS_LIB_PATH=../../Dist/Lib/Linux/x64
 LDFLAGS=-L $(DS_LIB_PATH) -Wl,-rpath=$(DS_LIB_PATH) -Wl,-rpath=./
-DS_LIB=-lDynamsoftCaptureVisionRouter -lDynamsoftCore -lDynamsoftUtility -lDynamsoftLicense
+DS_LIB=-lDynamsoftCaptureVisionRouter -lDynamsoftCore -lDynamsoftUtility -lDynamsoftLicense -lDynamsoftDocumentNormalizer -lDynamsoftLabelRecognizer -lDynamsoftIdentityUtility
 
 STDLIB=-lstdc++
 
