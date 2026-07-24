@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <climits>
+#include <vector>
 #include "../../Include/DynamsoftCaptureVisionRouter.h"
 #include "../../Include/DynamsoftUtility.h"
 using namespace std;
@@ -26,107 +27,6 @@ using namespace dynamsoft::utility;
 #endif
 #endif
 
-class DriverLicenseResult
-{
-public:
-	string codeType;
-	string versionNumber;
-	string licenseNumber;
-	string vehicleClass;
-	string fullName;
-	string lastName;
-	string givenName;
-	string gender;
-	string birthDate;
-	string issuedDate;
-	string expirationDate;
-
-	DriverLicenseResult FromParsedResultItem(const CParsedResultItem *item)
-	{
-		codeType = item->GetCodeType();
-
-		if (codeType != "AAMVA_DL_ID" && codeType != "AAMVA_DL_ID_WITH_MAG_STRIPE" && codeType != "SOUTH_AFRICA_DL")
-			return *this;
-
-		if (item->GetFieldValidationStatus("licenseNumber") != VS_FAILED && item->GetFieldValue("licenseNumber") != NULL)
-		{
-			licenseNumber = item->GetFieldValue("licenseNumber");
-		}
-		if (item->GetFieldValidationStatus("AAMVAVersionNumber") != VS_FAILED && item->GetFieldValue("AAMVAVersionNumber") != NULL)
-		{
-			versionNumber = item->GetFieldValue("AAMVAVersionNumber");
-		}
-		if (item->GetFieldValidationStatus("vehicleClass") != VS_FAILED && item->GetFieldValue("vehicleClass") != NULL)
-		{
-			vehicleClass = item->GetFieldValue("vehicleClass");
-		}
-		if (item->GetFieldValidationStatus("lastName") != VS_FAILED && item->GetFieldValue("lastName") != NULL)
-		{
-			lastName = item->GetFieldValue("lastName");
-		}
-		if (item->GetFieldValidationStatus("surName") != VS_FAILED && item->GetFieldValue("surName") != NULL)
-		{
-			lastName = item->GetFieldValue("surName");
-		}
-		if (item->GetFieldValidationStatus("givenName") != VS_FAILED && item->GetFieldValue("givenName") != NULL)
-		{
-			givenName = item->GetFieldValue("givenName");
-		}
-		if (item->GetFieldValidationStatus("fullName") != VS_FAILED && item->GetFieldValue("fullName") != NULL)
-		{
-			fullName = item->GetFieldValue("fullName");
-		}
-
-		if (item->GetFieldValidationStatus("sex") != VS_FAILED && item->GetFieldValue("sex") != NULL)
-		{
-			gender = item->GetFieldValue("sex");
-		}
-
-		if (item->GetFieldValidationStatus("gender") != VS_FAILED && item->GetFieldValue("gender") != NULL)
-		{
-			gender = item->GetFieldValue("gender");
-		}
-
-		if (item->GetFieldValidationStatus("birthDate") != VS_FAILED && item->GetFieldValue("birthDate") != NULL)
-		{
-			birthDate = item->GetFieldValue("birthDate");
-		}
-		if (item->GetFieldValidationStatus("issuedDate") != VS_FAILED && item->GetFieldValue("issuedDate") != NULL)
-		{
-			issuedDate = item->GetFieldValue("issuedDate");
-		}
-		if (item->GetFieldValidationStatus("expirationDate") != VS_FAILED && item->GetFieldValue("expirationDate") != NULL)
-		{
-			expirationDate = item->GetFieldValue("expirationDate");
-		}
-
-		if (fullName == "")
-		{
-			fullName = lastName + givenName;
-		}
-
-		return *this;
-	}
-
-	string ToString()
-	{
-		string msg = "Parsed Information:\n";
-		msg += "\tCode Type: " + codeType + "\n";
-		msg += "\tLicense Number: " + licenseNumber + "\n";
-		msg += "\tVehicle Class: " + vehicleClass + "\n";
-		msg += "\tLast Name: " + lastName + "\n";
-		msg += "\tGiven Name: " + givenName + "\n";
-		msg += "\tFull Name: " + fullName + "\n";
-		msg += "\tGender: " + gender + "\n";
-		msg += "\tDate of Birth: " + birthDate + "\n";
-		msg += "\tIssued Date: " + issuedDate + "\n";
-		msg += "\tExpiration Date: " + expirationDate + "\n";
-
-		return msg;
-	}
-};
-
-
 void PrintResult(CParsedResult *pResult)
 {
 	const CFileImageTag *tag = dynamic_cast<const CFileImageTag *>(pResult->GetOriginalImageTag());
@@ -145,14 +45,153 @@ void PrintResult(CParsedResult *pResult)
 		for (int i = 0; i < lCount; i++)
 		{
 			const CParsedResultItem *item = pResult->GetItem(i);
+			if(item == nullptr)
+				continue;
+			std::string codeType = item->GetCodeType();
+			std::vector<std::pair<std::string, std::string>> resultMap;
+			resultMap.push_back({"Code Type", codeType});
+			if (codeType == "AAMVA_DL_ID")
+			{
+				// For full field list and details, please refer to the documentation:
+				// https://www.dynamsoft.com/code-parser/docs/core/code-types/aamva-dl-id.html?lang=cplusplus#aamva_dl_id-fields
 
-			DriverLicenseResult result;
-			result.FromParsedResultItem(item);
-			cout << result.ToString() << endl;
+				const char* licenseNumber = item->GetFieldValue("licenseNumber");
+				if(licenseNumber && item->GetFieldValidationStatus("licenseNumber") != VS_FAILED)
+					resultMap.push_back({"License Number", licenseNumber});
+				
+				const char* vehicleClass = item->GetFieldValue("vehicleClass");
+				if(vehicleClass && item->GetFieldValidationStatus("vehicleClass") != VS_FAILED)
+					resultMap.push_back({"Vehicle Class", vehicleClass});
+				
+				const char* fullName = item->GetFieldValue("fullName");
+				if (fullName && item->GetFieldValidationStatus("fullName") != VS_FAILED)
+				{
+					resultMap.push_back({"Full Name", fullName});
+				}
+				else
+				{
+					const char* givenName = item->GetFieldValue("givenName");
+					if (givenName && strlen(givenName) > 0 && item->GetFieldValidationStatus("givenName") != VS_FAILED)
+					{
+						string fullName = givenName;
+						const char* lastName = item->GetFieldValue("lastName");
+						if (lastName && strlen(lastName) > 0 && item->GetFieldValidationStatus("lastName") != VS_FAILED)
+						{
+							fullName += " ";
+							fullName += lastName;
+						}
+						resultMap.push_back({ "Full Name", fullName });
+					}
+					else
+					{
+						const char* firstName = item->GetFieldValue("firstName");
+						const char* middleName = item->GetFieldValue("middleName");
+						const char* lastName = item->GetFieldValue("lastName");
+						string fullName;
+						if (firstName && item->GetFieldValidationStatus("firstName") != VS_FAILED)
+							fullName += firstName;
+						if (middleName && strlen(middleName) > 0 && item->GetFieldValidationStatus("middleName") != VS_FAILED)
+						{
+							if (!fullName.empty())
+								fullName += " ";
+							fullName += middleName;
+						}
+						if (lastName && strlen(lastName) > 0 && item->GetFieldValidationStatus("lastName") != VS_FAILED)
+						{
+							if (!fullName.empty())
+								fullName += " ";
+							fullName += lastName;
+						}
+						if (!fullName.empty())
+							resultMap.push_back({ "Full Name", fullName });
+					}
+				}
+				
+				const char* sex = item->GetFieldValue("sex");
+				if(sex && item->GetFieldValidationStatus("sex") != VS_FAILED)
+					resultMap.push_back({"Sex", sex});
+
+				const char* expirationDate = item->GetFieldValue("expirationDate");
+				if(expirationDate && item->GetFieldValidationStatus("expirationDate") != VS_FAILED)
+					resultMap.push_back({"Expiration Date", expirationDate});
+			}
+			else if (codeType == "AAMVA_DL_ID_WITH_MAG_STRIPE")
+			{
+				// For full field list and details, please refer to the documentation:
+				// https://www.dynamsoft.com/code-parser/docs/core/code-types/aamva-dl-id.html?lang=cplusplus#aamva_dl_id_with_mag_stripe-fields
+
+				const char* licenseNumber = item->GetFieldValue("DLorID_Number");
+				if(licenseNumber && item->GetFieldValidationStatus("DLorID_Number") != VS_FAILED)
+					resultMap.push_back({"License Number", licenseNumber});
+				
+				const char* isoIIN = item->GetFieldValue("ISOIIN");
+				if(isoIIN && item->GetFieldValidationStatus("ISOIIN") != VS_FAILED)
+					resultMap.push_back({"ISO IIN", isoIIN});
+				
+				const char* name = item->GetFieldValue("name");
+				if(name && item->GetFieldValidationStatus("name") != VS_FAILED)
+					resultMap.push_back({"Name", name});
+				
+				const char* sex = item->GetFieldValue("sex");
+				if(sex && item->GetFieldValidationStatus("sex") != VS_FAILED)
+					resultMap.push_back({"Sex", sex});
+				
+				const char* expirationDate = item->GetFieldValue("expirationDate");
+				if(expirationDate && item->GetFieldValidationStatus("expirationDate") != VS_FAILED)
+					resultMap.push_back({"Expiration Date", expirationDate});
+			}
+			else if (codeType == "SOUTH_AFRICA_DL")
+			{
+				// For full field list and details, please refer to the documentation:
+				// https://www.dynamsoft.com/code-parser/docs/core/code-types/za-dl.html?lang=cplusplus#fields
+				const char* idNumber = item->GetFieldValue("idNumber");
+				if(idNumber && item->GetFieldValidationStatus("idNumber") != VS_FAILED)
+					resultMap.push_back({"ID Number", idNumber});
+
+				const char* licenseNumber = item->GetFieldValue("licenseNumber");
+				if(licenseNumber && item->GetFieldValidationStatus("licenseNumber") != VS_FAILED)
+					resultMap.push_back({"License Number", licenseNumber});
+				const char* vehicleLicense = item->GetFieldValue("vehicleLicense");
+				if(vehicleLicense && item->GetFieldValidationStatus("vehicleLicense") != VS_FAILED)
+					resultMap.push_back({"Vehicle License", vehicleLicense});
+
+				const char* surname = item->GetFieldValue("surname");
+				const char* initials = item->GetFieldValue("initials");
+				string fullName;
+				if (surname && item->GetFieldValidationStatus("surname") != VS_FAILED)
+					fullName += surname;
+				if (initials && item->GetFieldValidationStatus("initials") != VS_FAILED)
+				{
+					if (!fullName.empty())
+						fullName += " ";
+					fullName += initials;
+				}
+				if (!fullName.empty())
+					resultMap.push_back({"Name", fullName});
+
+				const char* gender = item->GetFieldValue("gender");
+				if(gender && item->GetFieldValidationStatus("gender") != VS_FAILED)
+					resultMap.push_back({"Gender", gender});
+				const char* licenseValidityTo = item->GetFieldValue("licenseValidityTo");
+				if(licenseValidityTo && item->GetFieldValidationStatus("licenseValidityTo") != VS_FAILED)
+					resultMap.push_back({"License Valid To", licenseValidityTo});
+			}
+			else
+			{
+				cout << "Unsupported code type: " << codeType << endl;
+				continue;
+			}
+
+			std::cout << "Parsed Information:" << std::endl;
+			for (auto& pair : resultMap)
+			{
+				std::cout << "\t" << pair.first << ": " << pair.second << std::endl;
+			}
+			std::cout << std::endl;
 		}
 	}
 
-	cout << endl;
+	std::cout << std::endl;
 }
 
 int main()
