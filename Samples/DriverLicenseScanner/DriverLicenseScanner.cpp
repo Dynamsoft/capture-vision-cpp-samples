@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <climits>
 #include <vector>
 #include "../../Include/DynamsoftCaptureVisionRouter.h"
