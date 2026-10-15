@@ -5,23 +5,24 @@ project(GS1AIScanner LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -fvisibility=hidden -fvisibility-inlines-hidden -L ${DBRLIB} -Wl,-rpath,${DBRLIB} -Wl,-rpath,'$ORIGIN' -static-libgcc -static-libstdc++ -s")
-
-set(SOURCE_FILE GS1AIScanner.cpp)
+set(SOURCE_FILE ${CMAKE_CURRENT_SOURCE_DIR}/GS1AIScanner.cpp)
 set(TARGET_NAME GS1AIScanner)
 
-set(DS_LIB_PATH ../../Dist/Lib/Linux/x64)
-set(DS_LIBS DynamsoftCaptureVisionRouter DynamsoftCore DynamsoftUtility DynamsoftLicense)
+get_filename_component(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../.. ABSOLUTE)
 
-set(DCPRES_PATH ../../Dist/ParserResources)
-set(DS_JSON_PATH ../../Dist/Templates)
-set(DS_MODELS_PATH ../../Dist/Models)
+set(DS_LIB_PATH ${ROOT_DIR}/Dist/Lib/Linux/x64)
+set(DS_LIBS DynamsoftCaptureVisionRouter DynamsoftCore DynamsoftUtility DynamsoftLicense)
+link_directories(${DS_LIB_PATH})
+
+set(DCPRES_PATH ${ROOT_DIR}/Dist/ParserResources)
+set(DS_JSON_PATH ${ROOT_DIR}/Dist/Templates)
+set(DS_MODELS_PATH ${ROOT_DIR}/Dist/Models)
+
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -fvisibility=hidden -fvisibility-inlines-hidden -L${DS_LIB_PATH} -Wl,-rpath,${DS_LIB_PATH} -Wl,-rpath,'$ORIGIN' -static-libgcc -static-libstdc++ -s")
 
 add_executable(${TARGET_NAME} ${SOURCE_FILE})
 
 target_link_libraries(${TARGET_NAME} stdc++ ${DS_LIBS})
-
-target_link_directories(${TARGET_NAME} PRIVATE ${DS_LIB_PATH})
 
 set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_RPATH "${DS_LIB_PATH};./")
 

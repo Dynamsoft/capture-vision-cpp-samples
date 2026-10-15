@@ -92,14 +92,14 @@ int main()
 				}
 
 				CProcessedDocumentResult* processedDocumentResult = result->GetProcessedDocumentResult();
-				if (processedDocumentResult == nullptr || processedDocumentResult->GetDeskewedImageResultItemsCount() == 0)
+				if (processedDocumentResult == nullptr || processedDocumentResult->GetEnhancedImageResultItemsCount() == 0)
 				{
 					cout << "No document found in page " << pageNumber << endl;
 				}
 				else
 				{
-					int count = processedDocumentResult->GetDeskewedImageResultItemsCount();
-					cout << "Deskewed " << count << " documents" << endl;
+					int count = processedDocumentResult->GetEnhancedImageResultItemsCount();
+					cout << "Enhanced " << count << " documents" << endl;
 					for (int j = 0; j < count; j++)
 					{
 						const CEnhancedImageResultItem* enhancedImage = processedDocumentResult->GetEnhancedImageResultItem(j);
