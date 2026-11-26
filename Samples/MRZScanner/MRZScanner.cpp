@@ -31,13 +31,13 @@ using namespace dynamsoft::id_utility;
 // you can remove these pragmas and set linker inputs in your project instead.
 // -----------------------------------------------------------------------------
 #if defined(_WIN64) || defined(_WIN32)
-#ifdef _WIN64
+#if defined(_WIN64) && !defined(DCV_NO_PRAGMA_LINK)
 #pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftCaptureVisionRouterx64.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftCorex64.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftUtilityx64.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftLicensex64.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x64/DynamsoftIdentityUtilityx64.lib")
-#else
+#elif !defined(DCV_NO_PRAGMA_LINK)
 #pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftCaptureVisionRouterx86.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftCorex86.lib")
 #pragma comment(lib, "../../Dist/Lib/Windows/x86/DynamsoftUtilityx86.lib")
